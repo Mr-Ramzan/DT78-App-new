@@ -126,13 +126,14 @@
                     android:id="@+id/donutChart"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    app:chart_donutThickness="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayout4"
+                    android:padding="5dp"
                     app:chart_donutBackgroundColor="@android:color/white"
                     app:chart_donutRoundCorners="true"
+                    app:chart_donutThickness="10dp"
                     app:chart_donutTotal="100"
-                    >
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout4">
+
                     <TextView
                         android:id="@+id/targetSteps"
                         android:layout_width="wrap_content"
@@ -141,7 +142,7 @@
                         android:gravity="center"
                         android:text="5000"
                         android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </com.db.williamchart.view.DonutChartView>
 
                 <com.db.williamchart.view.LineChartView
@@ -242,7 +243,9 @@
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbarSize="0dp">
 
                 <LinearLayout
                     android:id="@+id/donutLayout"
@@ -268,9 +271,10 @@
                             android:layout_height="75dp"
                             android:layout_gravity="fill_horizontal"
                             android:onClick="onClick"
+                            android:padding="4dp"
                             app:chart_donutBackgroundColor="@color/colorWindowBackground"
                             app:chart_donutRoundCorners="true"
-                            app:chart_donutThickness="8dp"
+                            app:chart_donutThickness="6dp"
                             app:chart_donutTotal="100"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintStart_toStartOf="parent"
@@ -309,10 +313,12 @@
                             android:layout_width="75dp"
                             android:layout_height="75dp"
                             android:layout_gravity="fill_horizontal"
+                            android:layout_margin="6dp"
                             android:onClick="onClick"
+                            android:padding="4dp"
                             app:chart_donutBackgroundColor="@color/colorWindowBackground"
                             app:chart_donutRoundCorners="true"
-                            app:chart_donutThickness="8dp"
+                            app:chart_donutThickness="6dp"
                             app:chart_donutTotal="100"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintStart_toEndOf="@+id/space1"
@@ -326,7 +332,7 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="5000"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
                         </com.db.williamchart.view.DonutChartView>
 
@@ -351,10 +357,13 @@
                             android:layout_width="75dp"
                             android:layout_height="75dp"
                             android:layout_gravity="fill_horizontal"
+
+                            android:layout_margin="6dp"
                             android:onClick="onClick"
+                            android:padding="4dp"
                             app:chart_donutBackgroundColor="@color/colorWindowBackground"
                             app:chart_donutRoundCorners="true"
-                            app:chart_donutThickness="8dp"
+                            app:chart_donutThickness="6dp"
                             app:chart_donutTotal="100"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintStart_toEndOf="@+id/space2"
@@ -368,7 +377,7 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="5000"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
                         </com.db.williamchart.view.DonutChartView>
 
@@ -394,10 +403,12 @@
                             android:layout_width="75dp"
                             android:layout_height="75dp"
                             android:layout_gravity="fill_horizontal"
+                            android:layout_margin="6dp"
                             android:onClick="onClick"
+                            android:padding="4dp"
                             app:chart_donutBackgroundColor="@color/colorWindowBackground"
                             app:chart_donutRoundCorners="true"
-                            app:chart_donutThickness="8dp"
+                            app:chart_donutThickness="6dp"
                             app:chart_donutTotal="100"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintStart_toEndOf="@+id/space3"
@@ -488,6 +499,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
+                    android:scaleType="centerInside"
                     android:src="@raw/user"
                     app:tint="?attr/colorIcons" />
             </LinearLayout>
