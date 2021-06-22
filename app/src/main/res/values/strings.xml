@@ -238,4 +238,5 @@
     <string name="call">Call</string>
     <string name="sms">SMS</string>
     <string name="set_screen_lock">Set a screen lock first</string>
+    <string name="welcome_splash" translatable="false"><b>Welcome</b>\nSmart watch</string>
 </resources>

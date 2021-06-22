@@ -17,13 +17,12 @@
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorAccentGreen"
+            android:background="@color/primaryColor"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/city_vector" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
         android:id="@+id/cardInfo"
@@ -59,6 +58,7 @@
 
                 android:layout_weight="1"
                 android:text="@string/not_connect"
+                android:textColor="@android:color/white"
                 android:textSize="18sp" />
 
             <ImageView
@@ -69,13 +69,14 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:tint="?attr/colorIcons" />
+
             <ImageView
                 android:id="@+id/connect"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_bt"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:tint="#AAA" />
+                app:tint="@android:color/white" />
             <ImageView
                 android:id="@+id/charging"
                 android:layout_width="wrap_content"
@@ -91,7 +92,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_bat0"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:tint="#AAA" />
+                app:tint="@android:color/white" />
             <TextView
                 android:id="@+id/battery"
                 android:layout_width="wrap_content"
@@ -141,21 +142,21 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="5000"
+                        android:textColor="@android:color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </com.db.williamchart.view.DonutChartView>
 
                 <com.db.williamchart.view.LineChartView
                     android:id="@+id/barChart"
+                    android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="10dp"
-                    android:layout_width="match_parent"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayout4"
-                    app:chart_smoothLine="true"
                     app:chart_axis="none"
+                    app:chart_lineColor="@android:color/white"
                     app:chart_lineThickness="1dp"
-                    app:chart_lineColor="?attr/colorIcons"
-                    />
+                    app:chart_smoothLine="true"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout4" />
 
             </LinearLayout>
 
@@ -175,8 +176,10 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/steps"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/distanceText"
                     android:layout_width="0dp"
@@ -184,6 +187,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/distance"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -194,6 +198,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/kcal"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -211,21 +216,23 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_steps"
-                    android:layout_weight="1"
-                    app:tint="?attr/colorIcons" />
+                    app:tint="@android:color/white" />
+
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_distance"
-                    android:layout_weight="1"
-                    app:tint="?attr/colorIcons" />
+                    app:tint="@android:color/white" />
+
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_kcal"
                     android:layout_weight="1"
-                    app:tint="?attr/colorIcons" />
+                    android:src="@drawable/ic_kcal"
+                    app:tint="@android:color/white" />
 
             </LinearLayout>
         </LinearLayout>
@@ -270,9 +277,10 @@
                             android:layout_width="75dp"
                             android:layout_height="75dp"
                             android:layout_gravity="fill_horizontal"
+                            android:layout_margin="6dp"
                             android:onClick="onClick"
                             android:padding="4dp"
-                            app:chart_donutBackgroundColor="@color/colorWindowBackground"
+                            app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
                             app:chart_donutRoundCorners="true"
                             app:chart_donutThickness="6dp"
                             app:chart_donutTotal="100"
@@ -316,7 +324,7 @@
                             android:layout_margin="6dp"
                             android:onClick="onClick"
                             android:padding="4dp"
-                            app:chart_donutBackgroundColor="@color/colorWindowBackground"
+                            app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
                             app:chart_donutRoundCorners="true"
                             app:chart_donutThickness="6dp"
                             app:chart_donutTotal="100"
@@ -361,7 +369,7 @@
                             android:layout_margin="6dp"
                             android:onClick="onClick"
                             android:padding="4dp"
-                            app:chart_donutBackgroundColor="@color/colorWindowBackground"
+                            app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
                             app:chart_donutRoundCorners="true"
                             app:chart_donutThickness="6dp"
                             app:chart_donutTotal="100"
@@ -406,7 +414,7 @@
                             android:layout_margin="6dp"
                             android:onClick="onClick"
                             android:padding="4dp"
-                            app:chart_donutBackgroundColor="@color/colorWindowBackground"
+                            app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
                             app:chart_donutRoundCorners="true"
                             app:chart_donutThickness="6dp"
                             app:chart_donutTotal="100"
@@ -497,7 +505,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:layout_margin="5dp"
                     android:scaleType="centerInside"
                     android:src="@raw/user"
@@ -537,7 +545,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:layout_margin="5dp"
                     android:src="@raw/alarm"
                     app:tint="?attr/colorIcons" />
@@ -575,7 +583,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:layout_margin="5dp"
                     android:src="@raw/watch"
                     app:tint="?attr/colorIcons" />
@@ -692,7 +700,7 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="30dp"
                         android:layout_margin="5dp"
                         android:src="@drawable/ic_find"
                         app:tint="?attr/colorIcons" />
@@ -731,7 +739,7 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="30dp"
                         android:layout_margin="5dp"
                         android:src="@drawable/ic_send"
                         app:tint="?attr/colorIcons" />
@@ -772,7 +780,7 @@
                     <ImageView
                         android:id="@+id/cameraIcon"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="30dp"
                         android:layout_margin="5dp"
                         android:src="@drawable/ic_camera"
                         app:tint="?attr/colorIcons" />

@@ -65,16 +65,20 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".app.SettingsActivity"
-            android:label="@string/preferences" /> <!-- Notification Listener -->
+            android:label="@string/preferences" />
+        <activity android:name=".splash.Splash"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+         <!-- Notification Listener -->
         <service
             android:name=".app.NotificationListener"
             android:icon="@mipmap/ic_launcher"

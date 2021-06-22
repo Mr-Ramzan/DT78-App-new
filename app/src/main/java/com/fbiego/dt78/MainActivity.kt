@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity(), ConnectionListener {
         //donutChart.
         Timber.w("Current: $current, Plot: $plot")
         progress?.text = "${plot.toInt()}%"
-        donut?.donutColors = intArrayOf(contxt?.getColorFromAttr(R.attr.colorIcons)!!)
+        donut?.donutColors = intArrayOf(ContextCompat.getColor(this ,R.color.primaryColor))
 
         if (update){
             donut?.show(donutData)

@@ -3,19 +3,26 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryGreen</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkGreen</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/colorAccentGreen</item>
         <item name="android:windowBackground">@color/colorWindowBackground</item>
         <!--  -->
-        <item name="colorIcons">@color/colorIconsGreen</item>
+        <item name="colorIcons">@color/primaryColor</item>
         <item name="colorButtonDisabled">@color/colorButtonDisabledGreen</item>
         <item name="colorButtonEnabled">@color/colorButtonEnabledGreen</item>
         <item name="colorCardBackgroundDark">@color/colorCardBackgroundDarkGreen</item>
         <item name="colorCardBackgroundLight">@color/colorCardBackgroundLightGreen</item>
         <item name="colorBluetooth">@color/colorBluetooth</item>
     </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorControlNormal">@color/primaryDarkColor</item>
 
+    </style>
     <style name="RedTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimaryRed</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkRed</item>
