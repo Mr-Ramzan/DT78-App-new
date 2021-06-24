@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
- <color name="primaryColor">#92E3A9</color>
- <color name="primaryLightColor">#1e98ee99</color>
-
- <color name="primaryDarkColor">#92E3A9</color>
- <color name="primaryTextColor">#455A64</color>
-
-   <color name="colorWindowBackground">#E0E0E0</color>
-   <color name="colorWindowBackground1">#EBEBEB</color>
+    <color name="main_theme_color">#92E3A9</color>
+    <color name="main_theme_light">#1e98ee99</color>
+    <color name="primaryTextColor">#455A64</color>
+    <color name="colorWindowBackground">#E0E0E0</color>
+    <color name="colorWindowBackground1">#EBEBEB</color>
     <color name="colorTransparent">#0fff</color>
     <color name="colorCardBackground">#fff</color>
-
-
-
-
     <color name="colorPrimaryGreen">#35A9D8</color>
     <color name="colorPrimaryDarkGreen">#35A9D8</color>
     <color name="colorAccentGreen">#7bd3f7</color>
@@ -52,14 +45,14 @@
     <color name="colorIconsBlue">#342abf</color>
 
 
-<!-- <color name="colorPrimaryBlue">#342abf</color>-->
-<!-- <color name="colorPrimaryDarkBlue">#1e1873</color>-->
-<!-- <color name="colorAccentBlue">#4f45d9</color>-->
-<!-- <color name="colorButtonDisabledBlue">#afa5f9</color>-->
-<!-- <color name="colorButtonEnabledBlue">#4f45d9</color>-->
-<!-- <color name="colorCardBackgroundLightBlue">#9f95f9</color>&lt;!&ndash;#95f99f&ndash;&gt;-->
-<!-- <color name="colorCardBackgroundDarkBlue">#5f55c9</color>-->
-<!-- <color name="colorIconsBlue">#342abf</color>-->
+    <!-- <color name="colorPrimaryBlue">#342abf</color>-->
+    <!-- <color name="colorPrimaryDarkBlue">#1e1873</color>-->
+    <!-- <color name="colorAccentBlue">#4f45d9</color>-->
+    <!-- <color name="colorButtonDisabledBlue">#afa5f9</color>-->
+    <!-- <color name="colorButtonEnabledBlue">#4f45d9</color>-->
+    <!-- <color name="colorCardBackgroundLightBlue">#9f95f9</color>&lt;!&ndash;#95f99f&ndash;&gt;-->
+    <!-- <color name="colorCardBackgroundDarkBlue">#5f55c9</color>-->
+    <!-- <color name="colorIconsBlue">#342abf</color>-->
 
 
 </resources>

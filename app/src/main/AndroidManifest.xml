@@ -57,6 +57,7 @@
             android:name=".ReminderActivity"
             android:label="@string/reminder" />
         <activity
+            android:theme="@style/RedTheme"
             android:name=".HealthActivity"
             android:label="@string/health" />
         <activity
