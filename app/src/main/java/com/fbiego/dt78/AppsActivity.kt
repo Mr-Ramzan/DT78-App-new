@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.EditText
@@ -29,6 +30,8 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.fbiego.dt78.app.MainApplication
 import com.fbiego.dt78.data.*
 import kotlinx.android.synthetic.main.activity_apps.*
@@ -53,12 +56,34 @@ class AppsActivity : AppCompatActivity() {
     companion object {
         lateinit var appsRecycler: RecyclerView
     }
+    private fun changeStatusbarColor() {
+
+        try {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.primaryColor)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    private fun changeNavigationButtonBg(){
+        // Changing the bottom system navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.navigationBarColor = ContextCompat.getColor(this,R.color.primaryColor)
+
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         pref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(myTheme(pref.getInt(ST.PREF_ACCENT, 0)))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_apps)
-
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
+        changeNavigationButtonBg()
+        changeStatusbarColor()
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
 

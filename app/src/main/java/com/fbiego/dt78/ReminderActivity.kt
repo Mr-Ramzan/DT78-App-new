@@ -1,6 +1,7 @@
 package com.fbiego.dt78
 
 import android.app.TimePickerDialog
+import android.os.Build
 import android.os.Bundle
 import androidx.preference.PreferenceManager
 import androidx.appcompat.app.AlertDialog
@@ -9,8 +10,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.widget.SwitchCompat
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.fbiego.dt78.app.SettingsActivity
 import com.fbiego.dt78.data.AlarmAdapter
 import com.fbiego.dt78.data.AlarmData
@@ -29,12 +33,34 @@ class ReminderActivity : AppCompatActivity() {
         lateinit var alarmRecycler: RecyclerView
         var view = 0
     }
+    private fun changeStatusbarColor() {
+
+        try {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.primaryColor)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    private fun changeNavigationButtonBg(){
+        // Changing the bottom system navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.navigationBarColor = ContextCompat.getColor(this,R.color.primaryColor)
+
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(myTheme(pref.getInt(SettingsActivity.PREF_ACCENT, 0)))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reminder)
-
+        changeNavigationButtonBg()
+        changeStatusbarColor()
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
 

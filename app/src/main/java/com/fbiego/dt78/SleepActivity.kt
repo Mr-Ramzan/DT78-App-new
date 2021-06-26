@@ -1,10 +1,14 @@
 package com.fbiego.dt78
 
 import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.LinearLayout
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,12 +36,35 @@ class SleepActivity : AppCompatActivity() {
 
 
     }
+
+    private fun changeStatusbarColor() {
+
+        try {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.colorButtonDisabledGreen)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    private fun changeNavigationButtonBg(){
+        // Changing the bottom system navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.navigationBarColor = ContextCompat.getColor(this,R.color.colorButtonDisabledGreen)
+
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(myTheme(pref.getInt(SettingsActivity.PREF_ACCENT, 0)))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sleep)
-
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
+        changeNavigationButtonBg()
+        changeStatusbarColor()
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
 

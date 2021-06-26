@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.fbiego.dt78.MainActivity"
     android:background="@android:color/white">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/primaryColor"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        android:elevation="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_collapseMode="parallax"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:scrollbars="vertical"
+        android:scrollbarSize="0dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
 
         <ImageView
             android:id="@+id/imageView"
@@ -249,14 +275,17 @@
             app:layout_constraintTop_toBottomOf="@+id/layoutSteps">
 
             <HorizontalScrollView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"
+                android:scrollbars="horizontal"
+                android:layout_gravity="center"
                 android:scrollbarSize="0dp">
 
                 <LinearLayout
                     android:id="@+id/donutLayout"
-                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
@@ -267,15 +296,15 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="8dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="3dp"
                         app:cardUseCompatPadding="true">
 
                         <com.db.williamchart.view.DonutChartView
                             android:id="@+id/hrmDonut"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_margin="6dp"
                             android:onClick="onClick"
@@ -296,7 +325,7 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="5000"
-                                android:textSize="14sp"
+                                android:textSize="10sp"
                                 android:textStyle="bold" />
                         </com.db.williamchart.view.DonutChartView>
 
@@ -304,7 +333,7 @@
 
                     <Space
                         android:id="@+id/space1"
-                        android:layout_width="16dp"
+                        android:layout_width="8dp"
                         android:layout_height="match_parent"
                         app:layout_constraintStart_toEndOf="@+id/hrmDonut"
                         app:layout_constraintWidth_percent="0.06" />
@@ -318,8 +347,8 @@
 
                         <com.db.williamchart.view.DonutChartView
                             android:id="@+id/bpDonut"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_margin="6dp"
                             android:onClick="onClick"
@@ -340,7 +369,7 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="5000"
-                                android:textSize="12sp"
+                                android:textSize="10sp"
                                 android:textStyle="bold" />
                         </com.db.williamchart.view.DonutChartView>
 
@@ -348,7 +377,7 @@
 
                     <Space
                         android:id="@+id/space4"
-                        android:layout_width="16dp"
+                        android:layout_width="8dp"
                         android:layout_height="match_parent"
                         app:layout_constraintStart_toEndOf="@+id/spDonut"
                         app:layout_constraintWidth_percent="0.08" />
@@ -362,8 +391,8 @@
 
                         <com.db.williamchart.view.DonutChartView
                             android:id="@+id/spDonut"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="fill_horizontal"
 
                             android:layout_margin="6dp"
@@ -385,7 +414,7 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="5000"
-                                android:textSize="12sp"
+                                android:textSize="10sp"
                                 android:textStyle="bold" />
                         </com.db.williamchart.view.DonutChartView>
 
@@ -393,7 +422,7 @@
 
                     <Space
                         android:id="@+id/space3"
-                        android:layout_width="16dp"
+                        android:layout_width="8dp"
                         android:layout_height="match_parent"
                         app:layout_constraintStart_toEndOf="@+id/spDonut"
                         app:layout_constraintWidth_percent="0.08" />
@@ -401,15 +430,15 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="8dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="3dp"
                         app:cardUseCompatPadding="true">
 
                         <com.db.williamchart.view.DonutChartView
                             android:id="@+id/sleepDonut"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_margin="6dp"
                             android:onClick="onClick"
@@ -430,7 +459,7 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="5000"
-                                android:textSize="14sp"
+                                android:textSize="10sp"
                                 android:textStyle="bold" />
                         </com.db.williamchart.view.DonutChartView>
 
@@ -483,7 +512,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:onClick="onClick"
             app:cardBackgroundColor="@color/colorCardBackground"
             app:cardCornerRadius="8dp"
@@ -523,7 +552,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:onClick="onClick"
             app:cardBackgroundColor="@color/colorCardBackground"
             app:cardCornerRadius="8dp"
@@ -561,7 +590,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:onClick="onClick"
             app:cardBackgroundColor="@color/colorCardBackground"
             app:cardCornerRadius="8dp"
@@ -622,6 +651,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+
                     android:layout_margin="10dp">
 
                     <ImageView
@@ -678,7 +708,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
                 android:onClick="onClick"
                 app:cardBackgroundColor="@color/colorCardBackground"
                 app:cardCornerRadius="8dp"
@@ -717,7 +747,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
                 android:onClick="onClick"
                 app:cardBackgroundColor="@color/colorCardBackground"
                 app:cardCornerRadius="8dp"
@@ -756,7 +786,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
                 android:onClick="onClick"
                 app:cardBackgroundColor="@color/colorCardBackground"
                 app:cardCornerRadius="8dp"
@@ -799,5 +829,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
 
-</ScrollView>
+</LinearLayout>

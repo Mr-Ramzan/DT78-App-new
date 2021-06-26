@@ -9,42 +9,73 @@
         tools:context=".StepsActivity"
     android:background="@android:color/white">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/primaryColor"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        android:elevation="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_collapseMode="parallax"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
 
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <View
+        android:id="@+id/header_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="@+id/layoutTodaySteps"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_margin="10dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="9dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <ImageButton
             android:id="@+id/buttonPrev"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintWidth_percent="0.1"
-            android:backgroundTint="@color/button_color"
+            android:backgroundTint="@color/primaryLightColor"
             android:src="@drawable/ic_prev"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintWidth_percent="0.1" />
 
         <Space
             android:id="@+id/space3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:layout_constraintWidth_percent="0.05"
+            app:layout_constraintStart_toEndOf="@id/buttonPrev"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/buttonPrev" />
+            app:layout_constraintWidth_percent="0.05" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewDate"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_percent="0.7"
+            app:cardBackgroundColor="@color/colorTransparent"
             app:layout_constraintHeight_percent="1"
-            app:cardBackgroundColor="@color/colorCardBackground"
             app:layout_constraintStart_toEndOf="@+id/space3"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.7">
 
             <TextView
                 android:id="@+id/textDate"
@@ -53,6 +84,7 @@
                 android:gravity="center"
                 android:text="@string/no_data"
                 android:textAlignment="gravity"
+                android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
@@ -61,19 +93,19 @@
             android:id="@+id/space4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:layout_constraintWidth_percent="0.05"
+            app:layout_constraintStart_toEndOf="@id/cardViewDate"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cardViewDate" />
+            app:layout_constraintWidth_percent="0.05" />
 
         <ImageButton
             android:id="@+id/buttonNext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintWidth_percent="0.1"
-            android:backgroundTint="@color/button_color"
+            android:backgroundTint="@color/primaryLightColor"
             android:src="@drawable/ic_next"
             app:layout_constraintStart_toEndOf="@+id/space4"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -82,7 +114,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-         app:cardBackgroundColor="@color/colorCardBackground"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="9dp"
+        app:cardBackgroundColor="@color/primaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutTop">
 
         <LinearLayout
@@ -99,13 +135,14 @@
                     android:id="@+id/donutChart"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    app:chart_donutThickness="12dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayout4"
-                    app:chart_donutBackgroundColor="@color/colorWindowBackground"
+                    android:padding="4dp"
+                    app:chart_donutBackgroundColor="@color/primaryLightColor"
                     app:chart_donutRoundCorners="true"
+                    app:chart_donutThickness="8dp"
                     app:chart_donutTotal="100"
-                    >
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout4">
+
                     <TextView
                         android:id="@+id/targetSteps"
                         android:layout_width="wrap_content"
@@ -113,21 +150,21 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="5000"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
                 </com.db.williamchart.view.DonutChartView>
 
                 <com.db.williamchart.view.LineChartView
                     android:id="@+id/barChart"
+                    android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="10dp"
-                    android:layout_width="match_parent"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayout4"
-                    app:chart_smoothLine="true"
                     app:chart_axis="none"
+                    app:chart_lineColor="@color/primaryLightColor"
                     app:chart_lineThickness="1dp"
-                    app:chart_lineColor="?attr/colorIcons"
-                    />
+                    app:chart_smoothLine="true"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout4" />
 
             </LinearLayout>
 
@@ -135,8 +172,8 @@
                 android:id="@+id/layoutText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:weightSum="3">
 
@@ -147,6 +184,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/steps"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -157,6 +195,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="distance"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -167,6 +206,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="kcal"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -177,32 +217,32 @@
                 android:id="@+id/layoutText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:weightSum="3">
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_steps"
-                    android:layout_weight="1"
-                    app:tint="?attr/colorIcons" />
+                    app:tint="@android:color/white" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_distance"
-                    android:layout_weight="1"
-                    app:tint="?attr/colorIcons" />
+                    app:tint="@android:color/white" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_kcal"
                     android:layout_weight="1"
-                    app:tint="?attr/colorIcons" />
+                    android:src="@drawable/ic_kcal"
+                    app:tint="@android:color/white" />
 
             </LinearLayout>
         </LinearLayout>
@@ -210,9 +250,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/layoutTodaySteps"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/layoutTodaySteps"
+        app:layout_constraintStart_toStartOf="@+id/layoutTodaySteps"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTodaySteps" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,15 +3,19 @@ package com.fbiego.dt78
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import androidx.preference.PreferenceManager
 import com.fbiego.dt78.app.DataListener
 import com.fbiego.dt78.app.DataReceiver
@@ -30,35 +34,58 @@ class HealthActivity : AppCompatActivity(), DataListener {
     private var healthAdapter = HealthAdapter(healthList)
 
     var measuring = false
+
     companion object {
         lateinit var healthRecycler: RecyclerView
 
         var viewH = 0
+    }
+    private fun changeNavigationButtonBg(){
+        // Changing the bottom system navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.navigationBarColor = ContextCompat.getColor(this,R.color.colorButtonDisabledRed)
+
+        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(myTheme(pref.getInt(SettingsActivity.PREF_ACCENT, 0)))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_health)
-
+        changeStatusbarColor()
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
+        changeNavigationButtonBg()
         DataReceiver.bindListener(this)
-
         healthRecycler = findViewById<View>(R.id.recyclerHealthList) as RecyclerView
         healthRecycler.layoutManager =
-            LinearLayoutManager(this)
+                LinearLayoutManager(this)
 
         healthRecycler.isNestedScrollingEnabled = false
 
         healthRecycler.apply {
             layoutManager =
-                LinearLayoutManager(this@HealthActivity)
+                    LinearLayoutManager(this@HealthActivity)
             adapter = healthAdapter
         }
 
 
+    }
 
+
+    private fun changeStatusbarColor() {
+
+        try {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = ContextCompat.getColor(this@HealthActivity, R.color.colorButtonDisabledRed)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onResume() {
@@ -69,19 +96,19 @@ class HealthActivity : AppCompatActivity(), DataListener {
         val dbHandler = MyDBHandler(this, null, null, 1)
         healthList = when (viewH) {
             0 -> {
-                hrmCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
+//              hrmCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
                 dbHandler.getHeart()
             }
             1 -> {
-                bpCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
+//              bpCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
                 dbHandler.getBp()
             }
             2 -> {
-                sp02Card.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
+//              sp02Card.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
                 dbHandler.getSp02()
             }
             else -> {
-                hrmCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
+//              hrmCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
                 dbHandler.getHeart()
             }
         }
@@ -89,31 +116,30 @@ class HealthActivity : AppCompatActivity(), DataListener {
         healthAdapter.update(healthList)
 
 
-
     }
 
     fun measure(view: View) {
 
-        if (measuring){
+        if (measuring) {
             stopMeasure()
             progressBar.visibility = View.GONE
             tapInfo.text = getString(R.string.start_measure)
             measuring = false
         } else {
-            if (startMeasure()){
+            if (startMeasure()) {
                 progressBar.visibility = View.VISIBLE
                 tapInfo.text = getString(R.string.stop_measure)
                 measuring = true
                 valueHealth.text = "--"
-            } else{
+            } else {
                 Toast.makeText(this, R.string.not_connect, Toast.LENGTH_LONG).show()
             }
 
         }
     }
 
-    private fun startMeasure(): Boolean{
-        return when (viewH){
+    private fun startMeasure(): Boolean {
+        return when (viewH) {
             0 -> {
                 FG().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x0A, 0x01))
             }
@@ -127,8 +153,8 @@ class HealthActivity : AppCompatActivity(), DataListener {
         }
     }
 
-    private fun stopMeasure(){
-        when (viewH){
+    private fun stopMeasure() {
+        when (viewH) {
             0 -> {
                 FG().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x0A, 0x00))
             }
@@ -139,42 +165,42 @@ class HealthActivity : AppCompatActivity(), DataListener {
                 FG().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x12, 0x00))
             }
         }
-        if (measuring){
+        if (measuring) {
             progressBar.visibility = View.GONE
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun change(view: View){
+    fun change(view: View) {
 
         stopMeasure()
 
-        hrmCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundDark))
-        bpCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundDark))
-        sp02Card.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundDark))
+//        hrmCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundDark))
+//        bpCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundDark))
+//        sp02Card.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundDark))
         healthList.clear()
         val dbHandler = MyDBHandler(this, null, null, 1)
-        healthList = when(view.id){
+        healthList = when (view.id) {
             R.id.hrmCard -> {
                 viewH = 0
-                hrmCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
+//                hrmCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
                 dbHandler.getHeart()
 
             }
             R.id.bpCard -> {
                 viewH = 1
-                bpCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
+//                bpCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
                 dbHandler.getBp()
             }
             R.id.sp02Card -> {
                 viewH = 2
-                sp02Card.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
+//                sp02Card.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
                 dbHandler.getSp02()
             }
             else -> {
                 viewH = 0
-                hrmCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
-                
+//                hrmCard.backgroundTintList = ColorStateList.valueOf(this.getColorFromAttr(R.attr.colorCardBackgroundLight))
+
                 dbHandler.getHeart()
             }
         }
@@ -207,55 +233,55 @@ class HealthActivity : AppCompatActivity(), DataListener {
         val dbHandler = MyDBHandler(this, null, null, 1)
         val calendar = Calendar.getInstance(Locale.getDefault())
 
-        if (data.getByte(4) == (0x31).toByte()){
+        if (data.getByte(4) == (0x31).toByte()) {
 
             Timber.d("Type = ${data.getByte(5)!!.toPInt()} and value = ${data.getByte(6)!!.toPInt()}")
 
-            if (data.getByte(5) == (0x0A).toByte()){
+            if (data.getByte(5) == (0x0A).toByte()) {
                 val bp = data.getByte(6)!!.toPInt()
 
-                if (bp != 0){
+                if (bp != 0) {
                     runOnUiThread {
-                        if (measuring){
-                            valueHealth.text = "$bp "+getString(R.string.bpm)
+                        if (measuring) {
+                            valueHealth.text = "$bp " + getString(R.string.bpm)
                         }
                     }
                     dbHandler.insertHeart(
-                        HeartData(calendar.get(Calendar.YEAR)-2000,calendar.get(Calendar.MONTH)+1,
-                            calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), bp)
+                            HeartData(calendar.get(Calendar.YEAR) - 2000, calendar.get(Calendar.MONTH) + 1,
+                                    calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), bp)
                     )
                 }
             }
 
-            if (data.getByte(5) == (0x12).toByte()){
+            if (data.getByte(5) == (0x12).toByte()) {
                 val sp = data.getByte(6)!!.toPInt()
 
-                if (sp != 0){
+                if (sp != 0) {
                     runOnUiThread {
-                        if (measuring){
+                        if (measuring) {
                             valueHealth.text = "$sp %"
                         }
                     }
                     dbHandler.insertSp02(
-                        OxygenData(calendar.get(Calendar.YEAR)-2000,calendar.get(Calendar.MONTH)+1,
-                            calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), sp)
+                            OxygenData(calendar.get(Calendar.YEAR) - 2000, calendar.get(Calendar.MONTH) + 1,
+                                    calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), sp)
                     )
                 }
             }
 
-            if (data.getByte(5) == (0x22).toByte()){
+            if (data.getByte(5) == (0x22).toByte()) {
                 val bph = data.getByte(6)!!.toPInt()
                 val bpl = data.getByte(7)!!.toPInt()
 
-                if (bph != 0 ){
+                if (bph != 0) {
                     runOnUiThread {
-                        if (measuring){
-                            valueHealth.text = "$bpl/$bph "+getString(R.string.mmHg)
+                        if (measuring) {
+                            valueHealth.text = "$bpl/$bph " + getString(R.string.mmHg)
                         }
                     }
                     dbHandler.insertBp(
-                        PressureData(calendar.get(Calendar.YEAR)-2000,calendar.get(Calendar.MONTH)+1,
-                            calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), bph, bpl)
+                            PressureData(calendar.get(Calendar.YEAR) - 2000, calendar.get(Calendar.MONTH) + 1,
+                                    calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), bph, bpl)
                     )
                 }
             }

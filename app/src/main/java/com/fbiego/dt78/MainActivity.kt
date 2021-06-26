@@ -25,6 +25,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -158,7 +159,8 @@ class MainActivity : AppCompatActivity(), ConnectionListener {
         setTheme(myTheme(pref.getInt(ST.PREF_ACCENT, 0)))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
+        changeNavigationButtonBg()
         btAdapter = BluetoothAdapter.getDefaultAdapter()
         if (!btAdapter.isEnabled){
             val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
@@ -202,6 +204,13 @@ class MainActivity : AppCompatActivity(), ConnectionListener {
 
     }
 
+    private fun changeNavigationButtonBg(){
+        // Changing the bottom system navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.navigationBarColor = ContextCompat.getColor(this,R.color.primaryColor)
+
+        }
+    }
     private fun appsList(){
 
         val enabled = NotificationManagerCompat.getEnabledListenerPackages(this).contains(

@@ -40,7 +40,7 @@
     <string name="setup_desc">Setup watch mac address in settings</string>
     <string name="hrm">Heart Rate</string>
     <string name="bph">Blood Pressure</string>
-    <string name="sp02">Blood Oxygen</string>
+    <string name="sp02">O2 Level</string>
     <string name="user">User</string>
     <string name="reminder">Reminders</string>
     <string name="find_w">Find Watch</string>

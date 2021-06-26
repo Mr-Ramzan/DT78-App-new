@@ -6,8 +6,10 @@ import android.media.AudioManager
 import android.media.MediaActionSound
 import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import com.fbiego.dt78.app.DataListener
@@ -28,11 +30,34 @@ class CameraActivity : AppCompatActivity(), DataListener{
     private lateinit var camera2: Camera2
     private var disposable: Disposable? = null
 
+    private fun changeStatusbarColor() {
+
+        try {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.primaryColor)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    private fun changeNavigationButtonBg(){
+        // Changing the bottom system navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.navigationBarColor = ContextCompat.getColor(this,R.color.primaryColor)
+
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(myTheme(pref.getInt(SettingsActivity.PREF_ACCENT, 0)))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
+        changeNavigationButtonBg()
+        changeStatusbarColor()
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
 
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)

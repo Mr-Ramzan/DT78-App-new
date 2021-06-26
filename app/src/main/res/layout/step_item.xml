@@ -10,11 +10,11 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        app:cardBackgroundColor="?attr/colorCardBackgroundDark"
-        android:layout_marginBottom="3dp">
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="3dp"
+        app:cardBackgroundColor="@color/primaryColor">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,8 +37,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:text="1234 steps"
                 android:gravity="center"
+                android:text="1234 steps"
                 android:textStyle="bold" />
 
             <TextView
@@ -46,8 +46,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:text="33 km"
                 android:gravity="center"
+                android:text="33 km"
                 android:textStyle="bold" />
 
             <TextView
@@ -55,8 +55,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:text="172 kcal"
                 android:gravity="center"
+                android:text="172 kcal"
                 android:textStyle="bold" />
 
         </LinearLayout>

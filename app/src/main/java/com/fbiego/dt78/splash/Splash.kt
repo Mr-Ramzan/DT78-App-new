@@ -9,6 +9,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.fbiego.dt78.MainActivity
 import com.fbiego.dt78.R
@@ -22,6 +23,7 @@ class Splash : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         changeStatusBarColor()
+        changeNavigationButtonBg()
         //this will bind your MainActivity.class file with activity_main___.
        findViewById<LottieAnimationView>(R.id.lottie_splash_view).addAnimatorUpdateListener { valueAnimator ->
             // Set animation progress
@@ -64,6 +66,13 @@ class Splash : AppCompatActivity() {
 
                 Log.i("Splash", "Duringchange status bar color ====>${e.printStackTrace()}")
             }
+        }
+    }
+    private fun changeNavigationButtonBg(){
+        // Changing the bottom system navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.navigationBarColor = ContextCompat.getColor(this,R.color.colorWindowBackground)
+
         }
     }
 }

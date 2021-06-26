@@ -20,8 +20,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.fbiego.dt78.AboutActivity
 import com.fbiego.dt78.BuildConfig
 import com.fbiego.dt78.R
@@ -99,8 +102,10 @@ class SettingsActivity : AppCompatActivity() {
         setTheme(myTheme(pref.getInt(PREF_ACCENT, 0)))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-
+        changeNavigationButtonBg()
+        changeStatusbarColor()
         Timber.d("onCreate")
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
         setPref =  PreferenceManager.getDefaultSharedPreferences(this)
@@ -125,7 +130,26 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    private fun changeStatusbarColor() {
 
+        try {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.primaryColor)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    private fun changeNavigationButtonBg(){
+        // Changing the bottom system navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.navigationBarColor = ContextCompat.getColor(this,R.color.primaryColor)
+
+        }
+    }
 
     @SuppressLint("BatteryLife")
     override fun onResume() {

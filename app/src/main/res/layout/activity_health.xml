@@ -5,7 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HealthActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorButtonDisabledRed"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        android:elevation="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_collapseMode="parallax"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
 
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+
+
+    <View
+        android:id="@+id/headerbg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorButtonDisabledRed"
+        app:layout_constraintBottom_toBottomOf="@+id/healthCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -16,67 +47,157 @@
         android:orientation="horizontal"
         android:weightSum="3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/hrmCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-             app:cardBackgroundColor="?attr/colorCardBackgroundDark"
-            android:onClick="change">
+            android:layout_weight="0.8"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:padding="4dp"
+            app:cardBackgroundColor="@color/colorButtonDisabledRed"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp"
+
+            >
 
 
-
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="@string/hrm"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:onClick="change">
+
+                <ImageView
+                    android:id="@+id/heart_rate_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/heart_rate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/hrm"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/heart_rate_icon"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
 
         <androidx.cardview.widget.CardView
             android:id="@+id/bpCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="?attr/colorCardBackgroundDark"
-            android:onClick="change">
+            android:layout_weight="1.2"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="change"
+            android:padding="4dp"
+            app:cardBackgroundColor="@color/colorButtonDisabledRed"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp">
 
 
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="@string/bph"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:onClick="change">
 
+                <ImageView
+                    android:id="@+id/bp_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/heart_rate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@android:color/white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/bph"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bp_icon"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/sp02Card"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="?attr/colorCardBackgroundDark"
-            android:onClick="change">
+            android:layout_weight="0.8"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="change"
+            android:padding="4dp"
+            app:cardBackgroundColor="@color/colorButtonDisabledRed"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp">
 
 
-
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="@string/sp02"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:onClick="change">
 
+                <ImageView
+                    android:id="@+id/o2_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/heart_rate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@android:color/white" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/sp02"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/o2_icon"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
 
@@ -86,19 +207,18 @@
         android:id="@+id/healthCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
-        app:cardBackgroundColor="@color/colorCardBackground"
         android:onClick="measure"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout">
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/colorTransparent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        tools:layout_editor_absoluteX="10dp">
 
         <ProgressBar
             android:id="@+id/progressBar3"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,14 +226,13 @@
             android:orientation="vertical">
 
 
-
             <TextView
                 android:id="@+id/tapInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_margin="5dp"
-                android:text="@string/start_measure"/>
+                android:gravity="center"
+                android:text="@string/start_measure" />
 
             <TextView
                 android:id="@+id/valueHealth"
@@ -132,11 +251,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:indeterminate="true"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
         </LinearLayout>
-
 
 
     </androidx.cardview.widget.CardView>

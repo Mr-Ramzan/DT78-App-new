@@ -4,6 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/primaryColor"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        android:elevation="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_collapseMode="parallax"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <com.fbiego.dt78.camera.AutoFitTextureView
         android:id="@+id/camera_view"
@@ -11,51 +31,52 @@
         android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:keepScreenOn="true"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
     <RelativeLayout
         android:id="@+id/linearLayout3"
         android:layout_width="0dp"
         android:layout_height="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
 
         <ImageView
             android:id="@+id/iv_camera_flash_off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toStartOf="@id/iv_camera_flash_auto"
+            android:alpha="0.4"
             android:contentDescription="@string/app_name"
             android:padding="5dp"
-            android:alpha="0.4"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_flash_off"/>
+            android:src="@drawable/ic_flash_off" />
 
         <ImageView
             android:id="@+id/iv_camera_flash_on"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:alpha="0.4"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/iv_camera_flash_auto"
+            android:alpha="0.4"
             android:contentDescription="@string/app_name"
             android:padding="5dp"
-            android:src="@drawable/ic_flash_on"/>
+            android:src="@drawable/ic_flash_on" />
 
         <ImageView
             android:id="@+id/iv_camera_flash_auto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
             android:layout_centerInParent="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:contentDescription="@string/app_name"
             android:padding="5dp"
-            android:src="@drawable/ic_flash_auto"/>
+            android:src="@drawable/ic_flash_auto" />
 
 
     </RelativeLayout>

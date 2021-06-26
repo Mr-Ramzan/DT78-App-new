@@ -9,6 +9,26 @@
         tools:context=".app.ErrorLogActivity">
 
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/primaryColor"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        android:elevation="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_collapseMode="parallax"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <LinearLayout
         android:id="@+id/layoutTop"
@@ -16,22 +36,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
 
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <ImageButton
             android:id="@+id/buttonErrorPrev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:backgroundTint="@color/button_color"
-            android:src="@drawable/ic_prev"
-            android:layout_margin="10dp"/>
+            android:src="@drawable/ic_prev" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-             app:cardBackgroundColor="@color/colorCardBackground"
-            android:layout_weight="16">
+            android:layout_weight="16"
+            app:cardBackgroundColor="@color/colorCardBackground">
 
             <TextView
                 android:id="@+id/textErrorDate"
@@ -48,10 +68,9 @@
             android:id="@+id/buttonErrorNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/button_color"
-            android:src="@drawable/ic_next"
             android:layout_margin="10dp"
-            />
+            android:backgroundTint="@color/button_color"
+            android:src="@drawable/ic_next" />
 
     </LinearLayout>
 

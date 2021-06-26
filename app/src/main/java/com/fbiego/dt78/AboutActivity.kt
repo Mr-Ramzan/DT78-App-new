@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import android.view.View
+import android.view.WindowManager
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import androidx.preference.PreferenceManager
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
@@ -18,6 +20,27 @@ import kotlinx.android.synthetic.main.activity_about.*
 import com.fbiego.dt78.app.SettingsActivity as ST
 
 class AboutActivity : AppCompatActivity() {
+    private fun changeStatusbarColor() {
+
+        try {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.primaryColor)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    private fun changeNavigationButtonBg(){
+        // Changing the bottom system navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.navigationBarColor = ContextCompat.getColor(this,R.color.primaryColor)
+
+        }
+    }
+
 
     var darkMode = false
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -26,8 +49,10 @@ class AboutActivity : AppCompatActivity() {
         setTheme(myTheme(pref.getInt(ST.PREF_ACCENT, 0)))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
+        changeNavigationButtonBg()
+        changeStatusbarColor()
 
-
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
 

@@ -2,6 +2,7 @@ package com.fbiego.dt78
 
 import android.app.TimePickerDialog
 import android.content.*
+import android.os.Build
 import android.os.Bundle
 import androidx.preference.PreferenceManager
 import androidx.appcompat.app.AlertDialog
@@ -9,10 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.fbiego.dt78.data.*
 import kotlinx.android.synthetic.main.activity_setings.*
 import timber.log.Timber
@@ -20,13 +24,35 @@ import com.fbiego.dt78.app.ForegroundService as FG
 import com.fbiego.dt78.app.SettingsActivity as ST
 
 class SettingsWatchActivity : AppCompatActivity() {
+    private fun changeStatusbarColor() {
+
+        try {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.primaryColor)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    private fun changeNavigationButtonBg(){
+        // Changing the bottom system navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.navigationBarColor = ContextCompat.getColor(this,R.color.primaryColor)
+
+        }
+    }
     private var dt78 = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(myTheme(pref.getInt(ST.PREF_ACCENT, 0)))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setings)
-
+        changeNavigationButtonBg()
+        changeStatusbarColor()
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
 

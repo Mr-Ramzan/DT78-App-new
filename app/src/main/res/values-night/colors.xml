@@ -8,7 +8,7 @@
     <color name="colorPrimaryGreen">#000</color> <!-- #18731e -->
     <color name="colorPrimaryDarkGreen">#000</color> <!--#18731e-->
     <color name="colorAccentGreen">#2aff34</color>
-    <color name="colorWindowBackground">#000</color>
+    <color name="colorWindowBackground">#E0E0E0</color>
     <color name="colorButtonDisabledGreen">#05290f</color>
     <color name="colorButtonEnabledGreen">#25892f</color>
     <color name="colorCardBackground">#111</color>
