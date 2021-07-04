@@ -239,4 +239,10 @@
     <string name="sms">SMS</string>
     <string name="set_screen_lock">Set a screen lock first</string>
     <string name="welcome_splash" translatable="false"><b>Welcome</b>\nSmart watch</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_main_home">Main Home Fragment</string>
+    <string name="home_navigation">nav_home</string>
+    <string name="navigation_explore">Explore</string>
+    <string name="navigation_profile">provile_nav</string>
 </resources>

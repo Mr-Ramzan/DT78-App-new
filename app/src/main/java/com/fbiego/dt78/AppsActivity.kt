@@ -34,6 +34,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.fbiego.dt78.app.MainApplication
 import com.fbiego.dt78.data.*
+import com.fbiego.dt78.fragment.HomeFragment.Companion.PERMISSIONS_CONTACTS
+import com.fbiego.dt78.fragment.HomeFragment.Companion.PERMISSION_CALL
+import com.fbiego.dt78.fragment.HomeFragment.Companion.PERMISSION_CALL_LOG
+import com.fbiego.dt78.fragment.HomeFragment.Companion.PERMISSION_CONTACT
+import com.fbiego.dt78.fragment.HomeFragment.Companion.PERMISSION_SMS
 import kotlinx.android.synthetic.main.activity_apps.*
 import timber.log.Timber
 import com.fbiego.dt78.app.ForegroundService as FG
@@ -417,30 +422,30 @@ class AppsActivity : AppCompatActivity() {
 
     private fun requestContactPermission(){
         ActivityCompat.requestPermissions(this,
-            arrayOf(Manifest.permission.READ_CONTACTS), MainActivity.PERMISSION_CONTACT
+            arrayOf(Manifest.permission.READ_CONTACTS), PERMISSION_CONTACT
         )
     }
 
     private fun requestContactPermissions(){
         ActivityCompat.requestPermissions(this,
-            arrayOf(Manifest.permission.READ_CONTACTS), MainActivity.PERMISSIONS_CONTACTS
+            arrayOf(Manifest.permission.READ_CONTACTS), PERMISSIONS_CONTACTS
         )
     }
 
     private fun requestCallLogPermission(){
         ActivityCompat.requestPermissions(this,
-            arrayOf(Manifest.permission.READ_CALL_LOG), MainActivity.PERMISSION_CALL_LOG
+            arrayOf(Manifest.permission.READ_CALL_LOG), PERMISSION_CALL_LOG
         )
     }
 
     private fun requestSMSPermissions() {
         ActivityCompat.requestPermissions(this,
-            arrayOf(Manifest.permission.READ_SMS), MainActivity.PERMISSION_SMS
+            arrayOf(Manifest.permission.READ_SMS), PERMISSION_SMS
         )
     }
     private fun requestCallPermissions() {
         ActivityCompat.requestPermissions(this,
-            arrayOf(Manifest.permission.READ_PHONE_STATE), MainActivity.PERMISSION_CALL
+            arrayOf(Manifest.permission.READ_PHONE_STATE), PERMISSION_CALL
         )
     }
 
@@ -514,37 +519,37 @@ class AppsActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         Timber.d("Request code: $requestCode  Result:${grantResults[0]}")
 
-        if (requestCode == MainActivity.PERMISSION_CALL && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == PERMISSION_CALL && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             if (callPermission()){
                 val editor = pref.edit()
                 editor.putBoolean(ST.PREF_CALL, true).apply()
             }
         }
-        if (requestCode == MainActivity.PERMISSION_CALL_LOG && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == PERMISSION_CALL_LOG && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             if (callPermission()){
                 val editor = pref.edit()
                 editor.putBoolean(ST.PREF_CALL, true).apply()
             }
         }
-        if (requestCode == MainActivity.PERMISSION_CONTACT && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == PERMISSION_CONTACT && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             if (callPermission()){
                 val editor = pref.edit()
                 editor.putBoolean(ST.PREF_CALL, true).apply()
             }
         }
-        if (requestCode == MainActivity.PERMISSION_SMS && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == PERMISSION_SMS && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             if (smsPermission()){
                 val editor = pref.edit()
                 editor.putBoolean(ST.PREF_SMS, true).apply()
             }
         }
-        if (requestCode == MainActivity.PERMISSIONS_CONTACTS && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == PERMISSIONS_CONTACTS && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             if (smsPermission()){
                 val editor = pref.edit()
                 editor.putBoolean(ST.PREF_SMS, true).apply()
             }
         }
-        if (requestCode == MainActivity.PERMISSIONS_CONTACTS) {
+        if (requestCode == PERMISSIONS_CONTACTS) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             } else {
