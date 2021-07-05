@@ -19,6 +19,8 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.fbiego.dt78.data.*
+
+import com.fbiego.dt78.fragment.HomeFragment.Companion.PERMISSIONS_CONTACTS
 import kotlinx.android.synthetic.main.activity_contacts.*
 import timber.log.Timber
 import java.util.*
@@ -184,7 +186,7 @@ class ContactsActivity : AppCompatActivity() {
 
     private fun requestContactPermission(){
         ActivityCompat.requestPermissions(this,
-            arrayOf(Manifest.permission.READ_CONTACTS), MainActivity.PERMISSIONS_CONTACTS
+            arrayOf(Manifest.permission.READ_CONTACTS), PERMISSIONS_CONTACTS
         )
     }
 

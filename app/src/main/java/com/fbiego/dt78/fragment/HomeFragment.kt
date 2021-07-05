@@ -34,6 +34,7 @@ import com.db.williamchart.view.DonutChartView
 import com.fbiego.dt78.*
 import com.fbiego.dt78.app.*
 import com.fbiego.dt78.data.*
+import com.fbiego.dt78.databinding.FragmentMainHomeBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import no.nordicsemi.android.ble.data.Data
 import org.jetbrains.anko.support.v4.runOnUiThread
@@ -51,6 +52,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() ,ConnectionListener {
+    private lateinit var mBinding  : FragmentMainHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +61,8 @@ class HomeFragment : Fragment() ,ConnectionListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_main_home, container, false)
+        mBinding = FragmentMainHomeBinding.inflate(layoutInflater,container,false)
+        return mBinding.root
     }
 
 
@@ -138,12 +141,11 @@ class HomeFragment : Fragment() ,ConnectionListener {
 //        mChart.setDataList(dataList)
 //        mChart.build()
 
-            barChart.fillColor = requireContext().getColorFromAttr(R.attr.colorIcons)
-            //barChart.gradientFillColors = intArrayOf(this.getColorFromAttr(R.attr.colorIcons), ContextCompat.getColor(this, R.color.colorTransparent))
-            barChart.scale = Scale((max * -0.03).toFloat(), max.toFloat()+500)
-            //barChart.labelsFormatter = { "${it.roundToInt()}" }
-            barChart.animate(data)
-
+            mBinding.barChart.fillColor = requireContext().getColorFromAttr(R.attr.colorIcons)
+            //mBinding.barChart.gradientFillColors = intArrayOf(this.getColorFromAttr(R.attr.colorIcons), ContextCompat.getColor(this, R.color.colorTransparent))
+            mBinding.barChart .scale = Scale((max * -0.03).toFloat(), max.toFloat()+500)
+            //mBinding.barChart.labelsFormatter = { "${it.roundToInt()}" }
+            mBinding.barChart
 
         }
 
@@ -197,7 +199,7 @@ class HomeFragment : Fragment() ,ConnectionListener {
 
             ConnectionReceiver.bindListener(this)
 
-            shakeCamera.setOnLongClickListener {
+        mBinding.shakeCamera.setOnLongClickListener {
                 val cur = pref.getBoolean(SettingsActivity.PREF_CAMERA, false)
                 pref.edit().putBoolean(SettingsActivity.PREF_CAMERA, !cur).apply()
                 setCamera(!cur, RootUtil.isDeviceRooted)
@@ -425,7 +427,7 @@ class HomeFragment : Fragment() ,ConnectionListener {
 
 
 
-            appsNo.text = MainApplication.sharedPrefs.getStringSet(
+            mBinding. appsNo.text = MainApplication.sharedPrefs.getStringSet(
                     MainApplication.PREFS_KEY_ALLOWED_PACKAGES,
                     mutableSetOf()
             )?.size.toString()
@@ -473,20 +475,20 @@ class HomeFragment : Fragment() ,ConnectionListener {
 //        sleepList.add(SleepData(21, 2, 11, 1, 5, 1, 69))
 //        sleepList.add(SleepData(21, 2, 11, 5, 5, 2, 354))
 
-            textSleep.text = if (sleepList.isNotEmpty()){
+            mBinding.textSleep.text = if (sleepList.isNotEmpty()){
                 val lightS = sleepList.sumBy { if (it.type == 1) it.duration else 0 }
                 val deepS = sleepList.sumBy { if (it.type == 2) it.duration else 0 }
 
-                sleepDonut.donutColors= intArrayOf(requireContext().getColorFromAttr(R.attr.colorButtonEnabled), requireContext().getColorFromAttr(R.attr.colorIcons))
-                sleepDonut.animate(arrayListOf(((lightS.toFloat()/(lightS+deepS))*100), ((deepS.toFloat()/(lightS+deepS))*100)))
+                mBinding. sleepDonut.donutColors= intArrayOf(requireContext().getColorFromAttr(R.attr.colorButtonEnabled), requireContext().getColorFromAttr(R.attr.colorIcons))
+                mBinding. sleepDonut.animate(arrayListOf(((lightS.toFloat()/(lightS+deepS))*100), ((deepS.toFloat()/(lightS+deepS))*100)))
                 time(lightS + deepS) +"\n"+this.getString(R.string.sleep_txt)
             } else {
-                sleepDonut.donutColors= intArrayOf(requireContext().getColorFromAttr(R.attr.colorButtonEnabled), requireContext().getColorFromAttr(R.attr.colorIcons))
-                sleepDonut.animate(arrayListOf(0f, 0f))
+                mBinding. sleepDonut.donutColors= intArrayOf(requireContext().getColorFromAttr(R.attr.colorButtonEnabled), requireContext().getColorFromAttr(R.attr.colorIcons))
+                mBinding. sleepDonut.animate(arrayListOf(0f, 0f))
                 "0h 0m\n"+this.getString(R.string.sleep_txt)
             }
 
-            quietActive.visibility = if (isQuietA(dbHandler.getSet(2))) View.VISIBLE else View.GONE
+            mBinding.quietActive.visibility = if (isQuietA(dbHandler.getSet(2))) View.VISIBLE else View.GONE
 
 //        if (::menu.isInitialized){
 //            menu.findItem(R.id.menu_item_kill)?.isVisible = FG.serviceRunning
@@ -500,18 +502,18 @@ class HomeFragment : Fragment() ,ConnectionListener {
 
 
         private fun updateDash(hrm: Int, bpH: Int, bpL: Int, sp02: Int){
-            textHrm.text = "$hrm\n"+this.getString(R.string.bpm)
-            textBp.text = "$bpH/$bpL\n"+this.getString(R.string.mmHg)
-            textSp.text = "$sp02%\nO²"
+            mBinding.textHrm.text = "$hrm\n"+this.getString(R.string.bpm)
+            mBinding.textBp.text = "$bpH/$bpL\n"+this.getString(R.string.mmHg)
+            mBinding. textSp.text = "$sp02%\nO²"
 
 
 
-            hrmDonut.donutColors = intArrayOf(requireContext().getColorFromAttr(R.attr.colorIcons))
-            hrmDonut.animate(arrayListOf(map(hrm, 40, 100).toFloat()))
-            bpDonut.donutColors = intArrayOf(requireContext().getColorFromAttr(R.attr.colorIcons), requireContext().getColorFromAttr(R.attr.colorButtonEnabled))
-            bpDonut.animate(arrayListOf((bpH.toFloat()/(bpH+bpL)*100), (bpL.toFloat()/(bpH+bpL)*100)))
-            spDonut.donutColors = intArrayOf(requireContext().getColorFromAttr(R.attr.colorIcons))
-            spDonut.animate(arrayListOf(map(sp02, 80, 100).toFloat()))
+            mBinding. hrmDonut.donutColors = intArrayOf(requireContext().getColorFromAttr(R.attr.colorIcons))
+            mBinding. hrmDonut.animate(arrayListOf(map(hrm, 40, 100).toFloat()))
+            mBinding. bpDonut.donutColors = intArrayOf(requireContext().getColorFromAttr(R.attr.colorIcons), requireContext().getColorFromAttr(R.attr.colorButtonEnabled))
+            mBinding. bpDonut.animate(arrayListOf((bpH.toFloat()/(bpH+bpL)*100), (bpL.toFloat()/(bpH+bpL)*100)))
+            mBinding. spDonut.donutColors = intArrayOf(requireContext().getColorFromAttr(R.attr.colorIcons))
+            mBinding.  spDonut.animate(arrayListOf(map(sp02, 80, 100).toFloat()))
 
         }
 
@@ -538,39 +540,39 @@ class HomeFragment : Fragment() ,ConnectionListener {
 
         private fun checkEnabled(id: Int){
             if (id == ESP32){
-                cardInfo.isClickable = false
-                layoutSteps.isClickable = false
-                hrmDonut.isClickable = false
-                bpDonut.isClickable = false
-                spDonut.isClickable = false
-                userInfo.isClickable = false
-                reminder.isClickable = false
-                findWatch.isClickable = false
-                shakeCamera.isClickable = false
-                sleepDonut.isClickable = false
-                layoutSteps.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
-                linearLayout.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
-                userInfo.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
-                reminder.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
-                findWatch.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
-                shakeCamera.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
+                mBinding. cardInfo.isClickable = false
+                mBinding. layoutSteps.isClickable = false
+                mBinding. hrmDonut.isClickable = false
+                mBinding. bpDonut.isClickable = false
+                mBinding. spDonut.isClickable = false
+                mBinding.  userInfo.isClickable = false
+                mBinding. reminder.isClickable = false
+                mBinding. findWatch.isClickable = false
+                mBinding. shakeCamera.isClickable = false
+                mBinding.  sleepDonut.isClickable = false
+                mBinding.  layoutSteps.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
+                mBinding.  linearLayout.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
+                mBinding. userInfo.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
+                mBinding. reminder.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
+                mBinding. findWatch.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
+                mBinding.  shakeCamera.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
             } else {
-                cardInfo.isClickable = true
-                layoutSteps.isClickable = true
-                hrmDonut.isClickable = true
-                bpDonut.isClickable = true
-                spDonut.isClickable = true
-                userInfo.isClickable = true
-                reminder.isClickable = true
-                findWatch.isClickable = true
-                shakeCamera.isClickable = true
-                sleepDonut.isClickable = true
+                mBinding.   cardInfo.isClickable = true
+                mBinding.  layoutSteps.isClickable = true
+                mBinding. hrmDonut.isClickable = true
+                mBinding.  bpDonut.isClickable = true
+                mBinding. spDonut.isClickable = true
+                mBinding.  userInfo.isClickable = true
+                mBinding.  reminder.isClickable = true
+                mBinding. findWatch.isClickable = true
+                mBinding.  shakeCamera.isClickable = true
+                mBinding.  sleepDonut.isClickable = true
                 // layoutSteps.setCardBackgroundColor(ContextCompat.getColor(this, R.color.colorCardBackground))
                 //  linearLayout.setCardBackgroundColor(ContextCompat.getColor(this, R.color.colorCardBackground))
-                userInfo.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
-                reminder.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
-                findWatch.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
-                shakeCamera.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
+                mBinding.   userInfo.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
+                mBinding.  reminder.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
+                mBinding.  findWatch.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
+                mBinding.  shakeCamera.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
             }
         }
 
@@ -610,11 +612,11 @@ class HomeFragment : Fragment() ,ConnectionListener {
 
         private fun setCamera(external: Boolean, rooted: Boolean){
             if (external && rooted){
-                cameraIcon.setImageResource(R.drawable.ic_camera_ext)
-                cameraText.setText(R.string.ext_camera)
+                mBinding.  cameraIcon.setImageResource(R.drawable.ic_camera_ext)
+                mBinding.  cameraText.setText(R.string.ext_camera)
             } else {
-                cameraIcon.setImageResource(R.drawable.ic_camera)
-                cameraText.setText(R.string.camera)
+                mBinding.  cameraIcon.setImageResource(R.drawable.ic_camera)
+                mBinding.  cameraText.setText(R.string.camera)
             }
         }
 
