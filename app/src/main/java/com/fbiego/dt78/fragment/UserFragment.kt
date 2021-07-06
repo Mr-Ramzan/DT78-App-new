@@ -1,68 +1,71 @@
-package com.fbiego.dt78
+package com.fbiego.dt78.fragment
 
 import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
 import androidx.preference.PreferenceManager
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.fbiego.dt78.R
 import com.fbiego.dt78.app.SettingsActivity
 import com.fbiego.dt78.data.MyDBHandler
 import com.fbiego.dt78.data.UserListAdapter
 import com.fbiego.dt78.data.WheelView
-import com.fbiego.dt78.data.myTheme
+import com.fbiego.dt78.databinding.FragmentUserBinding
 import kotlinx.android.synthetic.main.activity_user.*
 import com.fbiego.dt78.app.ForegroundService as FG
 
-class UserActivity : AppCompatActivity() {
-
+class UserFragment : Fragment() {
+    private lateinit var mBinding:FragmentUserBinding
 
     private fun changeStatusbarColor() {
 
         try {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val window = window
+                val window = requireActivity().window
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                window.statusBarColor = ContextCompat.getColor(this, R.color.primaryColor)
+                window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primaryColor)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
-    private fun changeNavigationButtonBg(){
-        // Changing the bottom system navigation bar
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.navigationBarColor = ContextCompat.getColor(this,R.color.primaryColor)
+//    private fun changeNavigationButtonBg(){
+//        // Changing the bottom system navigation bar
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            window.navigationBarColor = ContextCompat.getColor(requireContext(),R.color.primaryColor)
+//
+//        }
+//    }
 
-        }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        mBinding = FragmentUserBinding.inflate(inflater,container,false)
+        return mBinding.root
+
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        setTheme(myTheme(pref.getInt(SettingsActivity.PREF_ACCENT, 0)))
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user)
-        changeNavigationButtonBg()
-        changeStatusbarColor()
-        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val actionbar = supportActionBar
-        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        mBinding.toolbar.setNavigationOnClickListener( View.OnClickListener() {
 
-        val setPref =  PreferenceManager.getDefaultSharedPreferences(this)
+        })
+
+        val setPref =  PreferenceManager.getDefaultSharedPreferences(requireContext())
         val unit = setPref.getBoolean(SettingsActivity.PREF_UNITS, false)
         val hr24 = !(setPref.getBoolean(SettingsActivity.PREF_12H, false))
 
         val current = ArrayList<Int>()
 
         val names = arrayListOf(getString(R.string.age), getString(R.string.step_len), getString(R.string.height),
-            getString(R.string.weight), getString(R.string.target))
-        val dbHandler = MyDBHandler(this, null, null, 1)
+                getString(R.string.weight), getString(R.string.target))
+        val dbHandler = MyDBHandler(requireContext(), null, null, 1)
 
 
         val sleep = dbHandler.getSet(1)
@@ -85,7 +88,7 @@ class UserActivity : AppCompatActivity() {
             FG().updateSleep(current)
         }
         sleepStart.setOnClickListener{
-            val picker = TimePickerDialog(this, { _, i, i2 ->
+            val picker = TimePickerDialog(requireContext(), { _, i, i2 ->
                 current[1] = i
                 current[2] = i2
                 sleepStart.text = String.format("%02d:%02d", i, i2)
@@ -95,7 +98,7 @@ class UserActivity : AppCompatActivity() {
             picker.show()
         }
         sleepEnd.setOnClickListener {
-            val picker = TimePickerDialog(this, { _, i, i2 ->
+            val picker = TimePickerDialog(requireContext(), { _, i, i2 ->
                 current[3] = i
                 current[4] = i2
                 sleepEnd.text = String.format("%02d:%02d", i, i2)
@@ -107,13 +110,13 @@ class UserActivity : AppCompatActivity() {
 
         val user = dbHandler.getUser()
         val values = arrayListOf("${user.age} "+getString(R.string.years), "${user.step} "+getString(R.string.cm),
-            "${user.height} "+getString(R.string.cm), "${user.weight} "+getString(R.string.kg), "${user.target} "+getString(R.string.steps))
+                "${user.height} "+getString(R.string.cm), "${user.weight} "+getString(R.string.kg), "${user.target} "+getString(R.string.steps))
         val icons = arrayListOf(R.drawable.ic_user, R.drawable.ic_length, R.drawable.ic_height, R.drawable.ic_weight, R.drawable.ic_steps)
 
 
 
 
-        val myUserList = UserListAdapter(this, icons, names, values, null)
+        val myUserList = UserListAdapter(requireActivity(), icons, names, values, null)
         userListView.adapter = myUserList
         userListView.setOnItemClickListener { _, _, i, _ ->
             val items = ArrayList<String>()
@@ -158,52 +161,66 @@ class UserActivity : AppCompatActivity() {
                 }
             }
 
-            val outer = LayoutInflater.from(this).inflate(R.layout.wheel_view, null)
+            val outer = LayoutInflater.from(requireContext()).inflate(R.layout.wheel_view, null)
             val wheelView = outer.findViewById<WheelView>(R.id.wheel_view_wv)
             wheelView.setItems(items)
             wheelView.setSelection(items.indexOf(values[i]))
 
-            val dialog = AlertDialog.Builder(this)
+            val dialog = AlertDialog.Builder(requireContext())
             dialog.setTitle(title)
-                .setView(outer)
-                .setPositiveButton(R.string.save){_, _ ->
-                    when (i){
-                        0 -> {
-                            user.age = value[wheelView.selectedIndex]
+                    .setView(outer)
+                    .setPositiveButton(R.string.save){ _, _ ->
+                        when (i){
+                            0 -> {
+                                user.age = value[wheelView.selectedIndex]
+                            }
+                            1 -> {
+                                user.step = value[wheelView.selectedIndex]
+                            }
+                            2 -> {
+                                user.height = value[wheelView.selectedIndex]
+                            }
+                            3 -> {
+                                user.weight = value[wheelView.selectedIndex]
+                            }
+                            4 -> {
+                                user.target = value[wheelView.selectedIndex]
+                            }
                         }
-                        1 -> {
-                            user.step = value[wheelView.selectedIndex]
-                        }
-                        2 -> {
-                            user.height = value[wheelView.selectedIndex]
-                        }
-                        3 -> {
-                            user.weight = value[wheelView.selectedIndex]
-                        }
-                        4 -> {
-                            user.target = value[wheelView.selectedIndex]
-                        }
+                        values[i] = wheelView.selectedItem
+                        myUserList.notifyDataSetChanged()
+                        dbHandler.insertUser(user)
+                        FG().updateUser(user, if (unit) 1 else 0)
                     }
-                    values[i] = wheelView.selectedItem
-                    myUserList.notifyDataSetChanged()
-                    dbHandler.insertUser(user)
-                    FG().updateUser(user, if (unit) 1 else 0)
-                }
-                .show()
+                    .show()
 
         }
 
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-        return true
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())
+//        requireContext()setTheme(myTheme(pref.getInt(SettingsActivity.PREF_ACCENT, 0)))
+        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_user)
+        //changeStatusbarColor()
+
+
+
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-    }
+
+
+
+//    override fun onSupportNavigateUp(): Boolean {
+//        onBackPressed()
+//        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+//        return true
+//    }
+
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+//    }
 }

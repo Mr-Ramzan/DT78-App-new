@@ -22,9 +22,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -35,7 +33,6 @@ import com.fbiego.dt78.*
 import com.fbiego.dt78.app.*
 import com.fbiego.dt78.data.*
 import com.fbiego.dt78.databinding.FragmentMainHomeBinding
-import kotlinx.android.synthetic.main.activity_main.*
 import no.nordicsemi.android.ble.data.Data
 import org.jetbrains.anko.support.v4.runOnUiThread
 import timber.log.Timber
@@ -51,7 +48,7 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() ,ConnectionListener {
+class HomeFragment : Fragment() ,ConnectionListener,View.OnClickListener {
     private lateinit var mBinding  : FragmentMainHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -196,7 +193,7 @@ class HomeFragment : Fragment() ,ConnectionListener {
             progress = view.findViewById(R.id.targetSteps)
             donut = view.findViewById(R.id.donutChart)
             contxt = requireContext()
-
+            setListeners()
             ConnectionReceiver.bindListener(this)
 
         mBinding.shakeCamera.setOnLongClickListener {
@@ -252,7 +249,7 @@ class HomeFragment : Fragment() ,ConnectionListener {
             }
         }
 
-        fun showDialog(context: Context){
+        public fun showDialog(context: Context){
             val alert = AlertDialog.Builder(context)
             alert.setTitle(context.getString(R.string.self_test_fail))
             alert.setMessage(context.getString(R.string.re_enable))
@@ -538,6 +535,28 @@ class HomeFragment : Fragment() ,ConnectionListener {
 //    }
 
 
+        private fun setListeners(){
+
+
+
+            mBinding. notificationApps.setOnClickListener(this)
+            mBinding. layoutSteps.setOnClickListener(this)
+            mBinding. barChart.setOnClickListener(this)
+            mBinding. settings.setOnClickListener(this)
+            mBinding. cardInfo.setOnClickListener(this)
+            mBinding. layoutSteps.setOnClickListener(this)
+            mBinding. hrmDonut.setOnClickListener(this)
+            mBinding. bpDonut.setOnClickListener(this)
+            mBinding. spDonut.setOnClickListener(this)
+            mBinding.  userInfo.setOnClickListener(this)
+            mBinding. reminder.setOnClickListener(this)
+            mBinding. findWatch.setOnClickListener(this)
+            mBinding. shakeCamera.setOnClickListener(this)
+            mBinding.  sleepDonut.setOnClickListener(this)
+
+        }
+
+
         private fun checkEnabled(id: Int){
             if (id == ESP32){
                 mBinding. cardInfo.isClickable = false
@@ -694,9 +713,9 @@ class HomeFragment : Fragment() ,ConnectionListener {
 
         }
 
-        fun onClick(view: View){
+    override fun onClick(view: View?) {
 
-            when (view.id) {
+            when (view?.id) {
                 R.id.cardInfo -> {
                     if (ForegroundService().syncData()) {
                         Toast.makeText(requireContext(), R.string.sync_watch, Toast.LENGTH_SHORT).show()
@@ -739,7 +758,7 @@ class HomeFragment : Fragment() ,ConnectionListener {
                     requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 }
                 R.id.userInfo -> {
-                    startActivity(Intent(requireContext(), UserActivity::class.javaObjectType))
+                    startActivity(Intent(requireContext(), UserFragment::class.javaObjectType))
                     requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 }
                 R.id.settings -> {

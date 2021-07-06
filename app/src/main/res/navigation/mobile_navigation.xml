@@ -11,8 +11,31 @@
         android:label="@string/fragment_main_home"
         tools:layout="@layout/fragment_main_home" >
 
+        <action
+            android:id="@+id/action_navigation_home_to_userActivity"
+            app:destination="@id/navigation_user"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_navigation_home_to_exploreFragment"
+            app:destination="@id/navigation_explore" />
     </fragment>
-
+    <fragment
+        android:id="@+id/navigation_user"
+        android:name="com.fbiego.dt78.fragment.UserFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/navigation_explore"
+        android:name="com.fbiego.dt78.fragment.ExploreFragment"
+        android:label="fragment_explore"
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_exploreFragment_to_navigation_user"
+            app:destination="@id/navigation_user" />
+    </fragment>
 
 
 </navigation>

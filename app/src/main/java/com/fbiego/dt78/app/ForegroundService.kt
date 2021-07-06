@@ -25,6 +25,7 @@ import com.fbiego.dt78.*
 import com.fbiego.dt78.ble.LEManager
 import com.fbiego.dt78.ble.LeManagerCallbacks
 import com.fbiego.dt78.data.*
+import com.fbiego.dt78.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_apps.*
 import no.nordicsemi.android.ble.BleManager
 import no.nordicsemi.android.ble.data.Data
@@ -513,7 +514,7 @@ class ForegroundService : Service(), MessageListener, PhonecallListener, DataLis
 
                 Toast.makeText(cnt, cnt.getString(R.string.self_test_fail), Toast.LENGTH_SHORT).show()
                 cancelNotification(TEST_ID, cnt)
-                MainActivity().showDialog(cnt)
+                HomeFragment().showDialog(cnt)
             }
 
         }, 2000)
@@ -1260,7 +1261,7 @@ class ForegroundService : Service(), MessageListener, PhonecallListener, DataLis
             }
         }
 
-        MainActivity().onDataReceived(data, this, dbHandler.getUser().step)
+        HomeFragment().onDataReceived(data, this, dbHandler.getUser().step)
     }
 
 

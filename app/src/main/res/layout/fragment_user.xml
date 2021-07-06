@@ -15,6 +15,7 @@
         android:contentInsetLeft="0dp"
         android:contentInsetEnd="0dp"
         android:contentInsetRight="0dp"
+        app:navigationIcon="?attr/homeAsUpIndicator"
         android:elevation="0dp"
         app:contentInsetEnd="0dp"
         app:contentInsetLeft="0dp"

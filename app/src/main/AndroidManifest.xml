@@ -51,7 +51,7 @@
             android:name=".SettingsWatchActivity"
             android:label="@string/watch_settings" />
         <activity
-            android:name=".UserActivity"
+            android:name=".fragment.UserFragment"
             android:label="@string/user" />
         <activity
             android:name=".ReminderActivity"

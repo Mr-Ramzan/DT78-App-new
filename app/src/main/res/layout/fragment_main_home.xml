@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.fbiego.dt78.MainActivity"
+    tools:context="com.fbiego.dt78.fragment.HomeFragment"
     android:background="@android:color/white">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -58,7 +59,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
-        android:onClick="onClick"
+        
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +136,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
-        android:onClick="onClick"
+        
         app:layout_constraintTop_toBottomOf="@+id/cardInfo">
 
         <LinearLayout
@@ -307,7 +308,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_margin="6dp"
-                            android:onClick="onClick"
+                            
                             android:padding="4dp"
                             app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
                             app:chart_donutRoundCorners="true"
@@ -351,7 +352,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_margin="6dp"
-                            android:onClick="onClick"
+                            
                             android:padding="4dp"
                             app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
                             app:chart_donutRoundCorners="true"
@@ -396,7 +397,7 @@
                             android:layout_gravity="fill_horizontal"
 
                             android:layout_margin="6dp"
-                            android:onClick="onClick"
+                            
                             android:padding="4dp"
                             app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
                             app:chart_donutRoundCorners="true"
@@ -441,7 +442,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_margin="6dp"
-                            android:onClick="onClick"
+                            
                             android:padding="4dp"
                             app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
                             app:chart_donutRoundCorners="true"
@@ -513,7 +514,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="0.9"
-            android:onClick="onClick"
+            
             app:cardBackgroundColor="@color/colorCardBackground"
             app:cardCornerRadius="8dp"
             app:cardElevation="3dp"
@@ -553,7 +554,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="0.9"
-            android:onClick="onClick"
+            
             app:cardBackgroundColor="@color/colorCardBackground"
             app:cardCornerRadius="8dp"
             app:cardElevation="3dp"
@@ -591,7 +592,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="0.9"
-            android:onClick="onClick"
+            
             app:cardBackgroundColor="@color/colorCardBackground"
             app:cardCornerRadius="8dp"
             app:cardElevation="3dp"
@@ -640,7 +641,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:onClick="onClick"
+                
                 android:layout_weight="3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -709,7 +710,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="0.9"
-                android:onClick="onClick"
+                
                 app:cardBackgroundColor="@color/colorCardBackground"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="3dp"
@@ -738,7 +739,6 @@
 
             </androidx.cardview.widget.CardView>
 
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/testNotify"
                 android:layout_width="0dp"
@@ -748,7 +748,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="0.9"
-                android:onClick="onClick"
+                
                 app:cardBackgroundColor="@color/colorCardBackground"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="3dp"
@@ -787,7 +787,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="0.9"
-                android:onClick="onClick"
+                
                 app:cardBackgroundColor="@color/colorCardBackground"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="3dp"
