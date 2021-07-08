@@ -196,16 +196,6 @@ class HomeFragment : Fragment() ,ConnectionListener,View.OnClickListener {
             setListeners()
             ConnectionReceiver.bindListener(this)
 
-        mBinding.shakeCamera.setOnLongClickListener {
-                val cur = pref.getBoolean(SettingsActivity.PREF_CAMERA, false)
-                pref.edit().putBoolean(SettingsActivity.PREF_CAMERA, !cur).apply()
-                setCamera(!cur, RootUtil.isDeviceRooted)
-                if (!cur && !RootUtil.isDeviceRooted){
-                    Toast.makeText(requireContext(), R.string.not_rooted, Toast.LENGTH_SHORT).show()
-                    pref.edit().putBoolean(SettingsActivity.PREF_CAMERA, false).apply()
-                }
-                true
-            }
 
             Timber.d("Main Activity onCreate ")
 
@@ -415,7 +405,7 @@ class HomeFragment : Fragment() ,ConnectionListener,View.OnClickListener {
 //            }
 
             }
-            setCamera(pref.getBoolean(SettingsActivity.PREF_CAMERA, false), RootUtil.isDeviceRooted)
+//            setCamera(pref.getBoolean(SettingsActivity.PREF_CAMERA, false), RootUtil.isDeviceRooted)
 
             bat?.text = "${ForegroundService.bat}%"
             watch?.text = ForegroundService.deviceName
@@ -503,8 +493,6 @@ class HomeFragment : Fragment() ,ConnectionListener,View.OnClickListener {
             mBinding.textBp.text = "$bpH/$bpL\n"+this.getString(R.string.mmHg)
             mBinding. textSp.text = "$sp02%\nO²"
 
-
-
             mBinding. hrmDonut.donutColors = intArrayOf(requireContext().getColorFromAttr(R.attr.colorIcons))
             mBinding. hrmDonut.animate(arrayListOf(map(hrm, 40, 100).toFloat()))
             mBinding. bpDonut.donutColors = intArrayOf(requireContext().getColorFromAttr(R.attr.colorIcons), requireContext().getColorFromAttr(R.attr.colorButtonEnabled))
@@ -548,10 +536,8 @@ class HomeFragment : Fragment() ,ConnectionListener,View.OnClickListener {
             mBinding. hrmDonut.setOnClickListener(this)
             mBinding. bpDonut.setOnClickListener(this)
             mBinding. spDonut.setOnClickListener(this)
-            mBinding.  userInfo.setOnClickListener(this)
             mBinding. reminder.setOnClickListener(this)
-            mBinding. findWatch.setOnClickListener(this)
-            mBinding. shakeCamera.setOnClickListener(this)
+
             mBinding.  sleepDonut.setOnClickListener(this)
 
         }
@@ -564,80 +550,31 @@ class HomeFragment : Fragment() ,ConnectionListener,View.OnClickListener {
                 mBinding. hrmDonut.isClickable = false
                 mBinding. bpDonut.isClickable = false
                 mBinding. spDonut.isClickable = false
-                mBinding.  userInfo.isClickable = false
                 mBinding. reminder.isClickable = false
-                mBinding. findWatch.isClickable = false
-                mBinding. shakeCamera.isClickable = false
                 mBinding.  sleepDonut.isClickable = false
                 mBinding.  layoutSteps.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
                 mBinding.  linearLayout.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
-                mBinding. userInfo.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
                 mBinding. reminder.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
-                mBinding. findWatch.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
-                mBinding.  shakeCamera.backgroundTintList = ColorStateList.valueOf(requireContext().getColorFromAttr(R.attr.colorCardBackgroundDark))
+
             } else {
                 mBinding.   cardInfo.isClickable = true
                 mBinding.  layoutSteps.isClickable = true
                 mBinding. hrmDonut.isClickable = true
                 mBinding.  bpDonut.isClickable = true
                 mBinding. spDonut.isClickable = true
-                mBinding.  userInfo.isClickable = true
                 mBinding.  reminder.isClickable = true
-                mBinding. findWatch.isClickable = true
-                mBinding.  shakeCamera.isClickable = true
+
                 mBinding.  sleepDonut.isClickable = true
                 // layoutSteps.setCardBackgroundColor(ContextCompat.getColor(this, R.color.colorCardBackground))
                 //  linearLayout.setCardBackgroundColor(ContextCompat.getColor(this, R.color.colorCardBackground))
-                mBinding.   userInfo.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
                 mBinding.  reminder.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
-                mBinding.  findWatch.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
-                mBinding.  shakeCamera.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCardBackground))
+
             }
         }
 
-        private fun testNotify(){
-            val builder = AlertDialog.Builder(requireContext())
-            val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())
-            val tp = pref.getInt(SettingsActivity.PREF_WATCH_ID, -1)
-            builder.setTitle(R.string.test_notification)
-            builder.setMessage(R.string.test_notification_desc)
-            val inflater = layoutInflater
-            val dialogInflater = inflater.inflate(R.layout.notify_layout, null)
-            val editText = dialogInflater.findViewById<EditText>(R.id.editText)
-            val spinner = dialogInflater.findViewById<Spinner>(R.id.spinner)
-            val adapter = NotifyAdapter(requireContext(), true, Watch(tp).iconSet)
-            spinner.adapter = adapter
-
-            builder.setView(dialogInflater)
-            builder.setPositiveButton(R.string.send){ _, _ ->
-                if (!ForegroundService().testNotification(
-                                editText.text.toString(),
-                                spinner.selectedItem as Int,
-                                requireContext().applicationContext
-                        )){
-                    Toast.makeText(requireContext(), R.string.not_connect, Toast.LENGTH_SHORT).show()
-                }
-            }
-            builder.setNegativeButton(R.string.cancel){ _, _ ->
-
-            }
-            builder.setNeutralButton(R.string.self_test){ _, _ ->
-                ForegroundService().selfTest(requireContext(), spinner.selectedItem as Int)
-            }
-            builder.show()
-
-        }
 
 
-        private fun setCamera(external: Boolean, rooted: Boolean){
-            if (external && rooted){
-                mBinding.  cameraIcon.setImageResource(R.drawable.ic_camera_ext)
-                mBinding.  cameraText.setText(R.string.ext_camera)
-            } else {
-                mBinding.  cameraIcon.setImageResource(R.drawable.ic_camera)
-                mBinding.  cameraText.setText(R.string.camera)
-            }
-        }
+
 
 
 
@@ -765,72 +702,7 @@ class HomeFragment : Fragment() ,ConnectionListener,View.OnClickListener {
                     startActivity(Intent(requireContext(), SettingsWatchActivity::class.javaObjectType))
                     requireActivity() .overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 }
-                R.id.findWatch -> {
-                    if (ForegroundService().findWatch()) {
-                        Toast.makeText(requireContext(), R.string.find_watch, Toast.LENGTH_SHORT).show()
 
-                    } else {
-                        Toast.makeText(requireContext(), R.string.not_connect, Toast.LENGTH_SHORT).show()
-                    }
-                }
-                R.id.shakeCamera -> {
-//                if (FG().shakeCamera()) {
-//                    //start camera
-//                    val intent = Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA)
-//                    this.startActivity(intent)
-//                } else {
-//                    Toast.makeText(this, R.string.not_connect, Toast.LENGTH_SHORT).show()
-//                }
-                    if (pref.getBoolean(SettingsActivity.PREF_CAMERA, false) && RootUtil.isDeviceRooted){
-                        if (ForegroundService().shakeCamera()) {
-                            //start camera
-                            val intent = Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA)
-                            this.startActivity(intent)
-                        } else {
-                            Toast.makeText(requireContext(), R.string.not_connect, Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        if (startCamera()){
-                            startActivity(Intent(requireContext(), CameraActivity::class.javaObjectType))
-                            requireActivity(). overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-                        }
-                    }
-
-//                if (RootUtil.isDeviceRooted){
-//                    val dialog = AlertDialog.Builder(this)
-//                    dialog.setTitle(title)
-//                        .setMessage("Choose camera")
-//                        .setPositiveButton("In-App"){_, _ ->
-//                            if (startCamera()){
-//                                startActivity(Intent(this, CameraActivity::class.javaObjectType))
-//                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-//                            }
-//
-//                        }
-//                        .setNeutralButton("External"){_, _ ->
-//                            if (FG().shakeCamera()) {
-//                                //start camera
-//                                val intent = Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA)
-//                                this.startActivity(intent)
-//                            } else {
-//                                Toast.makeText(this, R.string.not_connect, Toast.LENGTH_SHORT).show()
-//                            }
-//                        }
-//                        .show()
-//                } else {
-//                    if (startCamera()){
-//                        startActivity(Intent(this, CameraActivity::class.javaObjectType))
-//                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-//                    }
-//
-//                }
-
-
-
-                }
-                R.id.testNotify -> {
-                    testNotify()
-                }
 
             }
 
