@@ -334,7 +334,6 @@
                                 android:id="@+id/imageView6"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
-                                android:alpha="0.6"
                                 android:src="@drawable/bp_icon"
                                 app:layout_constraintBottom_toBottomOf="@+id/hrmDonut"
                                 app:layout_constraintEnd_toStartOf="@+id/hrmDonut"
