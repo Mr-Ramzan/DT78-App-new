@@ -665,12 +665,12 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
         mBinding.settings.setOnClickListener(this)
         mBinding.cardInfo.setOnClickListener(this)
         mBinding.layoutSteps.setOnClickListener(this)
-        mBinding.hrmDonut.setOnClickListener(this)
-        mBinding.bpDonut.setOnClickListener(this)
-        mBinding.spDonut.setOnClickListener(this)
+        mBinding.hrmButton.setOnClickListener(this)
+        mBinding.bpButton.setOnClickListener(this)
+        mBinding.spButton.setOnClickListener(this)
         mBinding.reminder.setOnClickListener(this)
 
-        mBinding.sleepDonut.setOnClickListener(this)
+        mBinding.sleepButton.setOnClickListener(this)
 
     }
 
@@ -797,7 +797,7 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
                         .show()
                 }
             }
-            R.id.hrmDonut -> {
+            R.id.hrmButton -> {
                 HealthActivity.viewH = 0
                 startActivity(Intent(requireContext(), HealthActivity::class.javaObjectType))
                 requireActivity().overridePendingTransition(
@@ -805,7 +805,7 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
                     R.anim.slide_out_left
                 )
             }
-            R.id.bpDonut -> {
+            R.id.bpButton -> {
                 HealthActivity.viewH = 1
                 startActivity(Intent(requireContext(), HealthActivity::class.javaObjectType))
                 requireActivity().overridePendingTransition(
@@ -813,7 +813,7 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
                     R.anim.slide_out_left
                 )
             }
-            R.id.spDonut -> {
+            R.id.spButton -> {
                 HealthActivity.viewH = 2
                 startActivity(Intent(requireContext(), HealthActivity::class.javaObjectType))
                 requireActivity().overridePendingTransition(
@@ -845,7 +845,7 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
                     R.anim.slide_out_left
                 )
             }
-            R.id.sleepDonut -> {
+            R.id.sleepButton -> {
                 startActivity(Intent(requireContext(), SleepActivity::class.javaObjectType))
                 requireActivity().overridePendingTransition(
                     R.anim.slide_in_right,
