@@ -28,6 +28,8 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/AppTheme">
+        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".CameraActivity"
             android:label="@string/camera" />
@@ -57,29 +59,28 @@
             android:name=".ReminderActivity"
             android:label="@string/reminder" />
         <activity
-            android:theme="@style/RedTheme"
             android:name=".HealthActivity"
-            android:label="@string/health" />
+            android:label="@string/health"
+            android:theme="@style/RedTheme" />
         <activity
             android:name=".StepsActivity"
             android:label="@string/steps_history" />
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop">
-
-        </activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".app.SettingsActivity"
             android:label="@string/preferences" />
-        <activity android:name=".splash.Splash"
+        <activity
+            android:name=".splash.Splash"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-         <!-- Notification Listener -->
+        </activity> <!-- Notification Listener -->
         <service
             android:name=".app.NotificationListener"
             android:icon="@mipmap/ic_launcher"
@@ -89,8 +90,7 @@
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
-        </service>
-        <!-- Foreground service -->
+        </service> <!-- Foreground service -->
         <service
             android:name=".app.ForegroundService"
             android:exported="false" />
