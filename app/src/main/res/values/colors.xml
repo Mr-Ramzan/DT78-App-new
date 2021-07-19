@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#92E3A9</color>
+    <color name="primaryColor">#352EBD</color>
     <color name="primaryLightColor">#1e98ee99</color>
-    <color name="primaryDarkColor">#92E3A9</color>
+    <color name="primaryDarkColor">#352EBD</color>
     <color name="primaryTextColor">#455A64</color>
     <color name="colorWindowBackground">#E0E0E0</color>
     <color name="colorWindowBackground1">#EBEBEB</color>
@@ -55,7 +55,9 @@
     <!-- <color name="colorButtonEnabledBlue">#4f45d9</color>-->
     <!-- <color name="colorCardBackgroundLightBlue">#9f95f9</color>&lt;!&ndash;#95f99f&ndash;&gt;-->
     <!-- <color name="colorCardBackgroundDarkBlue">#5f55c9</color>-->
-    <!-- <color name="colorIconsBlue">#342abf</color>-->
+    <!-- <color name="colorIconsBlue">#342abf</color>-->ent
+    <color name="gradientDark">#352EBD</color>
+    <color name="gradientLight">#6280FF</color>
 
 
 </resources>

@@ -242,7 +242,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fragment_main_home">Main Home Fragment</string>
-    <string name="home_navigation">nav_home</string>
+    <string name="home_navigation">Home</string>
     <string name="navigation_explore">Explore</string>
-    <string name="navigation_profile">provile_nav</string>
+    <string name="navigation_profile">Profile</string>
 </resources>

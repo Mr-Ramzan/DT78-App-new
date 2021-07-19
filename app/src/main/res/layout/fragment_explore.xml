@@ -93,7 +93,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="?attr/colorIcons" />
+                        app:tint="@android:color/holo_orange_light" />
 
                     <ImageView
                         android:id="@+id/imageView3"
@@ -161,7 +161,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="?attr/colorIcons" />
+                        app:tint="@android:color/holo_red_light" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -208,7 +208,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="?attr/colorIcons" />
+                        app:tint="@android:color/holo_purple" />
 
                     <ImageView
                         android:id="@+id/imageView5"

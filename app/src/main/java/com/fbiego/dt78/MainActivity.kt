@@ -1,6 +1,5 @@
 package com.fbiego.dt78
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity

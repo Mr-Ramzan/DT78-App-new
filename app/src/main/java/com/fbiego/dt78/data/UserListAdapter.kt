@@ -1,12 +1,14 @@
 package com.fbiego.dt78.data
 
 import android.app.Activity
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.content.ContextCompat
 import com.fbiego.dt78.R
 
 class UserListAdapter(private val activity: Activity, private val icon: ArrayList<Int>, private val name: ArrayList<String>, private val value: ArrayList<String>?, private val state:ArrayList<Boolean?>?)
@@ -21,7 +23,20 @@ class UserListAdapter(private val activity: Activity, private val icon: ArrayLis
         val iconR = rowView.findViewById<ImageView>(R.id.userIcon)
 
         nameR.text = name[position]
+
         iconR.setImageResource(icon[position])
+        if(position%4==0){
+            iconR.imageTintList = ContextCompat.getColorStateList(rowView.context,android.R.color.holo_orange_light)
+        }else if(position%4==1){
+            iconR.imageTintList = ContextCompat.getColorStateList(rowView.context,android.R.color.holo_red_light)
+
+        }else if(position%4==2){
+            iconR.imageTintList = ContextCompat.getColorStateList(rowView.context,android.R.color.holo_green_light)
+
+        }else if(position%4==3){
+            iconR.imageTintList = ContextCompat.getColorStateList(rowView.context,android.R.color.holo_purple)
+
+        }
 
         if (value != null){
             switchR.visibility = View.GONE

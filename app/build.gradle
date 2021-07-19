@@ -93,6 +93,8 @@ dependencies {
 
     //lottie Animation
     implementation 'com.airbnb.android:lottie:3.2.0'
+    //Stylish Widgets Library
+    implementation 'com.app.infideap.stylishwidget:stylish-widget:1.5.1'
 
 
 }

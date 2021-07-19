@@ -13,7 +13,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/primaryColor"
+        android:background="@color/gradientDark"
         android:contentInsetStart="0dp"
         android:contentInsetLeft="0dp"
         android:contentInsetEnd="0dp"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <androidx.core.widget.NestedScrollView
         android:scrollbars="vertical"
@@ -44,7 +44,7 @@
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/primaryColor"
+            android:background="@drawable/gradient_background"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +76,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_watch"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:tint="?attr/colorIcons" />
+                app:tint="@android:color/holo_orange_dark" />
 
             <TextView
                 android:id="@+id/watchName"
@@ -85,7 +85,7 @@
 
                 android:layout_weight="1"
                 android:text="@string/not_connect"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/holo_orange_dark"
                 android:textSize="18sp" />
 
             <ImageView
@@ -95,7 +95,7 @@
                 android:src="@drawable/ic_silent"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:tint="?attr/colorIcons" />
+                app:tint="@android:color/holo_orange_dark" />
 
             <ImageView
                 android:id="@+id/connect"
@@ -187,6 +187,15 @@
 
             </LinearLayout>
 
+
+            <com.app.infideap.stylishwidget.view.AProgressBar
+                android:id="@+id/progressBar_multi_color"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:padding="1dp"
+                android:visibility="gone"
+                app:sw_progressBackground="#ccc"
+                app:sw_radius="7dp" />
             <LinearLayout
                 android:id="@+id/layoutText"
                 android:layout_width="match_parent"
@@ -245,356 +254,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/ic_steps"
-                    app:tint="@android:color/white" />
+                    app:tint="@android:color/holo_purple" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/ic_distance"
-                    app:tint="@android:color/white" />
+                    app:tint="@android:color/holo_red_dark" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/ic_kcal"
-                    app:tint="@android:color/white" />
+                    app:tint="@android:color/holo_orange_light" />
 
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutSteps">
-
-
-
-                <LinearLayout
-                    android:id="@+id/donutLayout"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="95dp"
-                        android:layout_height="110dp"
-                        android:layout_marginStart="8dp"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="3dp"
-                        app:cardUseCompatPadding="true">
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <com.db.williamchart.view.DonutChartView
-                                android:id="@+id/hrmDonut"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_gravity="fill_horizontal"
-                                android:layout_margin="6dp"
-                                android:padding="0dp"
-                                app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
-                                app:chart_donutRoundCorners="true"
-                                app:chart_donutThickness="2dp"
-                                app:chart_donutTotal="100"
-                                app:layout_constraintBottom_toTopOf="@+id/textHrm"
-                                app:layout_constraintDimensionRatio=""
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintWidth_percent="0.2" />
-
-                            <TextView
-                                android:id="@+id/textHrm"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginBottom="8dp"
-                                android:text="5000"
-                                android:textSize="10sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/imageView6"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:src="@drawable/bp_icon"
-                                app:layout_constraintBottom_toBottomOf="@+id/hrmDonut"
-                                app:layout_constraintEnd_toStartOf="@+id/hrmDonut"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-                    </androidx.cardview.widget.CardView>
-
-                    <Space
-                        android:id="@+id/space1"
-                        android:layout_width="8dp"
-                        android:layout_height="match_parent"
-                        app:layout_constraintStart_toEndOf="@+id/hrmDonut"
-                        app:layout_constraintWidth_percent="0.06" />
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="3dp"
-                        app:cardUseCompatPadding="true">
-
-                        <com.db.williamchart.view.DonutChartView
-                            android:id="@+id/bpDonut"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="fill_horizontal"
-                            android:layout_margin="6dp"
-                            
-                            android:padding="4dp"
-                            app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
-                            app:chart_donutRoundCorners="true"
-                            app:chart_donutThickness="6dp"
-                            app:chart_donutTotal="100"
-                            app:layout_constraintDimensionRatio="1:1"
-                            app:layout_constraintStart_toEndOf="@+id/space1"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.2">
-
-                            <TextView
-                                android:id="@+id/textBp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:text="5000"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-                        </com.db.williamchart.view.DonutChartView>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <Space
-                        android:id="@+id/space4"
-                        android:layout_width="8dp"
-                        android:layout_height="match_parent"
-                        app:layout_constraintStart_toEndOf="@+id/spDonut"
-                        app:layout_constraintWidth_percent="0.08" />
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="3dp"
-                        app:cardUseCompatPadding="true">
-
-                        <com.db.williamchart.view.DonutChartView
-                            android:id="@+id/spDonut"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="fill_horizontal"
-
-                            android:layout_margin="6dp"
-                            
-                            android:padding="4dp"
-                            app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
-                            app:chart_donutRoundCorners="true"
-                            app:chart_donutThickness="6dp"
-                            app:chart_donutTotal="100"
-                            app:layout_constraintDimensionRatio="1:1"
-                            app:layout_constraintStart_toEndOf="@+id/space2"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.2">
-
-                            <TextView
-                                android:id="@+id/textSp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:text="5000"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-                        </com.db.williamchart.view.DonutChartView>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <Space
-                        android:id="@+id/space3"
-                        android:layout_width="8dp"
-                        android:layout_height="match_parent"
-                        app:layout_constraintStart_toEndOf="@+id/spDonut"
-                        app:layout_constraintWidth_percent="0.08" />
-
-
-                </LinearLayout>
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="3dp"
-                    app:cardUseCompatPadding="true">
-
-                    <com.db.williamchart.view.DonutChartView
-                        android:id="@+id/sleepDonut"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="fill_horizontal"
-                        android:layout_margin="6dp"
-
-                        android:padding="4dp"
-                        app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
-                        app:chart_donutRoundCorners="true"
-                        app:chart_donutThickness="6dp"
-                        app:chart_donutTotal="100"
-                        app:layout_constraintDimensionRatio="1:1"
-                        app:layout_constraintStart_toEndOf="@+id/space3"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_percent="0.2">
-
-                        <TextView
-                            android:id="@+id/textSleep"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="5000"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-                    </com.db.williamchart.view.DonutChartView>
-
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/reminder"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="0.9"
-
-                    app:cardBackgroundColor="@color/colorCardBackground"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="3dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/reminder"
-                            android:textSize="14sp" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_margin="5dp"
-                            android:src="@raw/alarm"
-                            app:tint="?attr/colorIcons" />
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/settings"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="0.9"
-
-                    app:cardBackgroundColor="@color/colorCardBackground"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="3dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/settings"
-                            android:textSize="14sp" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_margin="5dp"
-                            android:src="@raw/watch"
-                            app:tint="?attr/colorIcons" />
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-
-            <LinearLayout
-                android:id="@+id/linearLayout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:gravity="center">
-
-
-
-
-                </LinearLayout>
-            </LinearLayout>
 
 
         <LinearLayout
@@ -663,15 +341,424 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutSteps">
+
+
+
+                <LinearLayout
+                    android:id="@+id/donutLayout"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="95dp"
+                        android:layout_height="110dp"
+                        android:layout_marginStart="8dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="3dp"
+                        app:cardUseCompatPadding="true">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <com.db.williamchart.view.DonutChartView
+                                android:id="@+id/hrmDonut"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_margin="6dp"
+                                android:padding="0dp"
+                                android:visibility="gone"
+                                app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
+                                app:chart_donutRoundCorners="true"
+                                app:chart_donutThickness="2dp"
+                                app:chart_donutTotal="100"
+                                app:layout_constraintBottom_toTopOf="@+id/textHrm"
+                                app:layout_constraintDimensionRatio=""
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintWidth_percent="0.2" />
+
+                            <TextView
+                                android:id="@+id/textHrm"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginBottom="8dp"
+                                android:text="5000"
+                                android:textAllCaps="true"
+                                android:textColor="@android:color/holo_orange_dark"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imageView6"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:padding="8dp"
+                                android:src="@drawable/bp_icon"
+                                app:layout_constraintBottom_toBottomOf="@+id/hrmDonut"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@android:color/holo_orange_dark" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
 
 
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="95dp"
+                        android:layout_height="110dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="3dp"
+                        app:cardUseCompatPadding="true">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
 
+                            <ImageView
+                                android:id="@+id/imageView7"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:padding="8dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/heart_rate"
+                                app:layout_constraintBottom_toTopOf="@+id/textBp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="1.0"
+                                app:tint="@android:color/holo_red_light" />
+
+                            <com.db.williamchart.view.DonutChartView
+                                android:id="@+id/bpDonut"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_margin="6dp"
+
+                                android:padding="4dp"
+                                android:visibility="gone"
+                                app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
+                                app:chart_donutRoundCorners="true"
+                                app:chart_donutThickness="6dp"
+                                app:chart_donutTotal="100"
+                                app:layout_constraintBottom_toTopOf="@+id/textBp"
+                                app:layout_constraintDimensionRatio="1:1"
+
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.2">
+
+                            </com.db.williamchart.view.DonutChartView>
+
+                            <TextView
+                                android:id="@+id/textBp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginBottom="8dp"
+                                android:gravity="center"
+                                android:text="5000"
+                                android:textAllCaps="true"
+                                android:textColor="@android:color/holo_red_light"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="95dp"
+                        android:layout_height="110dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="3dp"
+                        app:cardUseCompatPadding="true">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/imageView9"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:padding="8dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/_icon"
+
+                                app:layout_constraintBottom_toTopOf="@+id/textSp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@android:color/holo_green_light" />
+
+                            <TextView
+                                android:id="@+id/textSp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginBottom="8dp"
+                                android:gravity="center"
+                                android:text="5000"
+                                android:textAllCaps="true"
+                                android:textColor="@android:color/holo_green_light"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <com.db.williamchart.view.DonutChartView
+                                android:id="@+id/spDonut"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_margin="6dp"
+                                android:padding="4dp"
+                                android:visibility="gone"
+                                app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
+                                app:chart_donutRoundCorners="true"
+                                app:chart_donutThickness="6dp"
+                                app:chart_donutTotal="100"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.2">
+
+                            </com.db.williamchart.view.DonutChartView>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
 
 
+                </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="95dp"
+                    android:layout_height="110dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.db.williamchart.view.DonutChartView
+                            android:id="@+id/sleepDonut"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_margin="6dp"
+
+                            android:padding="4dp"
+                            android:visibility="gone"
+                            app:chart_donutBackgroundColor="@color/colorButtonDisabledBlue"
+                            app:chart_donutRoundCorners="true"
+                            app:chart_donutThickness="6dp"
+                            app:chart_donutTotal="100"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.2">
+
+
+                        </com.db.williamchart.view.DonutChartView>
+
+                        <ImageView
+                            android:id="@+id/imageView8"
+                            android:layout_width="84dp"
+                            android:layout_height="77dp"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/sleep"
+                            app:layout_constraintBottom_toTopOf="@+id/textSleep"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@android:color/holo_purple" />
+
+                        <TextView
+                            android:id="@+id/textSleep"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:text="5000"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/holo_purple"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/reminder"
+                    android:layout_width="95dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+
+                    app:cardBackgroundColor="@color/colorCardBackground"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:text="@string/reminder"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/holo_green_dark"
+                            android:textSize="10sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imageView10"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_margin="5dp"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@raw/alarm"
+                            app:layout_constraintBottom_toTopOf="@+id/textView5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@android:color/holo_green_dark" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/settings"
+                    android:layout_width="95dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardBackgroundColor="@color/colorCardBackground"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:text="@string/settings"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/holo_orange_dark"
+                            android:textSize="10sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:padding="8dp"
+                            android:src="@raw/watch"
+                            app:layout_constraintBottom_toTopOf="@+id/textView6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@android:color/holo_orange_dark" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

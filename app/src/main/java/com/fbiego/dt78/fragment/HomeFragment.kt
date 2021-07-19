@@ -15,26 +15,27 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
-import android.provider.MediaStore
 import android.provider.Settings
-import androidx.appcompat.widget.Toolbar
 import android.view.*
-import android.widget.*
-import androidx.fragment.app.Fragment
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import com.app.infideap.stylishwidget.view.AProgressBar
 import com.db.williamchart.data.Scale
 import com.db.williamchart.view.DonutChartView
 import com.fbiego.dt78.*
 import com.fbiego.dt78.app.*
 import com.fbiego.dt78.data.*
 import com.fbiego.dt78.databinding.FragmentMainHomeBinding
-import kotlinx.android.synthetic.main.fragment_main_home.*
 import no.nordicsemi.android.ble.data.Data
 import org.jetbrains.anko.support.v4.runOnUiThread
 import timber.log.Timber
@@ -65,7 +66,7 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
 
     private lateinit var menu: Menu
     private var alertDialog: AlertDialog? = null
-
+    lateinit var colorMultiProgressBar :AProgressBar
     private lateinit var timer: Timer
     private val noDelay = 500L
     private val duration = 1000L * 30
@@ -192,6 +193,18 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
         progress = view.findViewById(R.id.targetSteps)
         donut = view.findViewById(R.id.donutChart)
         contxt = requireContext()
+        val colorMultiProgressBar =
+            view.findViewById<View>(R.id.progressBar_multi_color) as AProgressBar
+        colorMultiProgressBar.setProgressValues(30f, 60f, 80f, 100f)
+        colorMultiProgressBar.setProgressColors(
+           ContextCompat.getColor(requireContext(),android.R.color.holo_red_dark),
+            ContextCompat.getColor(requireContext(),android.R.color.holo_orange_dark),
+            ContextCompat.getColor(requireContext(),android.R.color.holo_orange_light),
+            ContextCompat.getColor(requireContext(),android.R.color.holo_green_light)
+        )
+
+        colorMultiProgressBar.setMaxValue(100f)
+        colorMultiProgressBar.withAnimation(1000)
         setListeners()
         ConnectionReceiver.bindListener(this)
 
@@ -204,6 +217,72 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
 
     private fun inflateMenu() {
         toolbar.inflateMenu(R.menu.main_menu)
+        menu = toolbar.menu
+
+       toolbar.setOnMenuItemClickListener(Toolbar.OnMenuItemClickListener{item ->
+
+         when (item.itemId) {
+               R.id.menu_item_prefs -> {
+                   startActivity(Intent(requireContext(), SettingsActivity::class.java))
+                   requireActivity().overridePendingTransition(
+                       R.anim.slide_in_right,
+                       R.anim.slide_out_left
+                   )
+                   true
+               }
+               R.id.menu_item_kill -> {
+                   ConnectionReceiver().notifyStatus(false)
+                   Toast.makeText(requireContext(), R.string.stop_service, Toast.LENGTH_SHORT).show()
+                   requireActivity().stopService(
+                       Intent(
+                           requireContext(),
+                           ForegroundService::class.java
+                       )
+                   )
+                   item.isVisible = false
+                   menu.findItem(R.id.menu_item_start)?.isVisible = true
+                   true
+               }
+               R.id.menu_item_start -> {
+                   item.isVisible = false
+                   menu.findItem(R.id.menu_item_kill)?.isVisible = true
+
+                   val remoteMacAddress = pref.getString(
+                       SettingsActivity.PREF_KEY_REMOTE_MAC_ADDRESS,
+                       ForegroundService.VESPA_DEVICE_ADDRESS
+                   )
+                   //val id = pref.getInt(ST.PREF_WATCH_ID, UNKNOWN)
+                   if (btAdapter.isEnabled) {
+                       if (remoteMacAddress != ForegroundService.VESPA_DEVICE_ADDRESS) {
+
+//                        if (isConnected(btAdapter.getRemoteDevice(remoteMacAddress)) && id == UNKNOWN){
+//                            Toast.makeText(this, "Device already connected", Toast.LENGTH_SHORT).show()
+//                            deviceConnected()
+//                        } else {
+//                            Toast.makeText(this, R.string.start_service, Toast.LENGTH_SHORT).show()
+//                            startService(Intent(this, FG::class.java))
+//                        }
+
+                           Toast.makeText(requireContext(), R.string.start_service, Toast.LENGTH_SHORT)
+                               .show()
+                           requireContext().startService(
+                               Intent(
+                                   requireContext(),
+                                   ForegroundService::class.java
+                               )
+                           )
+                       }
+
+                   } else {
+                       //enable bt
+                       val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                       startActivityForResult(enableBluetoothIntent, REQUEST_ENABLE_BT)
+                   }
+                   true
+               }
+               else -> super.onOptionsItemSelected(item)
+           }
+       })
     }
 
 
