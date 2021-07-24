@@ -28,8 +28,8 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignupActivity"></activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".auth.SignupActivity"></activity>
+        <activity android:name=".auth.LoginActivity" />
         <activity
             android:name=".CameraActivity"
             android:label="@string/camera" />
