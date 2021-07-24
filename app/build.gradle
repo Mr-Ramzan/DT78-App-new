@@ -22,7 +22,7 @@ android {
         viewBinding true
     }
     defaultConfig {
-        applicationId "com.hassan.dt78"
+        applicationId "com.fbiego.dt78"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 32

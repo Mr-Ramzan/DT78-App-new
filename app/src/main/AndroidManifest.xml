@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".auth.SignupActivity"></activity>
+        <activity android:name=".auth.SignupActivity" />
         <activity android:name=".auth.LoginActivity" />
         <activity
             android:name=".CameraActivity"
@@ -52,9 +52,7 @@
         <activity
             android:name=".SettingsWatchActivity"
             android:label="@string/watch_settings" />
-        <activity
-            android:name=".fragment.UserFragment"
-            android:label="@string/user" />
+
         <activity
             android:name=".ReminderActivity"
             android:label="@string/reminder" />

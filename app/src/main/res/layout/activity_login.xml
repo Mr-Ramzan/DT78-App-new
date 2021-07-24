@@ -82,7 +82,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
+                android:id="@+id/fab_g"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -96,7 +96,7 @@
                 app:elevation="0dp"
                 android:backgroundTint="#4E525B"
                 app:fabCustomSize="80dp"
-                tools:ignore="RelativeOverlap" />
+           />
 
             <TextView
 
@@ -127,7 +127,6 @@
                 android:layout_centerInParent="true"
                 android:layout_marginStart="30dp"
                 android:padding="15dp"
-                android:onClick="OpenSignupPage"
                 android:text="Sign up"
                 android:textSize="18sp"
                 android:textStyle="bold" />
