@@ -4,24 +4,39 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.fbiego.dt78.databinding.ActivitySignupBinding
+import com.fbiego.dt78.firebase.FirebaseMethods
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import timber.log.Timber
 
 
 class SignupActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
     private lateinit var mBinding: ActivitySignupBinding
+
+    ///////////////////////Firebase////////////////////////
+    var firebaseMethods: FirebaseMethods? = null
+    var database: FirebaseDatabase? = null
+    var myRef: DatabaseReference? = null
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-        mAuth = FirebaseAuth.getInstance();
+        firebaseMethods = FirebaseMethods(this)
+        mAuth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+        myRef = database!!.reference
+
         setListeners()
     }
 

@@ -11,10 +11,8 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
-import com.fbiego.dt78.MainActivity
 import com.fbiego.dt78.R
 import com.fbiego.dt78.auth.LoginActivity
-import com.fbiego.dt78.auth.SignupActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
