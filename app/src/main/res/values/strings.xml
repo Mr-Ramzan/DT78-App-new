@@ -245,5 +245,8 @@
     <string name="home_navigation">Home</string>
     <string name="navigation_explore">Explore</string>
     <string name="navigation_profile">Profile</string>
-    <string name="users_node">fit_users</string>
+    <string name="users_node" translatable="false">fit_users</string>
+    <string name="edt_name" translatable="false">Name</string>
+    <string name="edt_phone" translatable="false">Number</string>
+    <string name="btn_save" translatable="false">save</string>
 </resources>

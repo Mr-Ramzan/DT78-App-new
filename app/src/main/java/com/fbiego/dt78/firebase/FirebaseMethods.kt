@@ -1,48 +1,73 @@
 package com.fbiego.dt78.firebase
 
 import android.app.Activity
+import android.content.Context
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import com.fbiego.dt78.R
 import com.fbiego.dt78.model.User
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import timber.log.Timber
 import java.util.*
 
-class FirebaseMethods(activity: Activity) {
-    private var mActivity: Activity
+class FirebaseMethods(var context: Activity) {
+
     private var userID: String? = null
-    private var mAuth: FirebaseAuth
-    private var myRef: DatabaseReference
-    private var database: FirebaseDatabase
-    private var mStorage: FirebaseStorage
-    private var mStorageRef: StorageReference
+    private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var mStorage: FirebaseStorage = FirebaseStorage.getInstance()
+    private var mStorageRef: StorageReference = mStorage.reference
     private var mediaCount: Long = 0
+    private var myRef: DatabaseReference = database.reference
 
     companion object {
         private const val TAG = "FirebaseMethods"
     }
 
     init {
-        mAuth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
-        mStorage = FirebaseStorage.getInstance()
-        myRef = database.reference
-        mStorageRef = mStorage.reference
-        mActivity = activity
         if (mAuth.currentUser != null) {
             userID = mAuth.currentUser!!.uid
         }
     } //
     //
+
+
+     fun signUp(email: String, password: String , callback: (success: Boolean) -> Unit) {
+        mAuth.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener(context as Activity,
+            OnCompleteListener<AuthResult> { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Timber.d( "signInWithEmail:success");
+                    var user:User = User()
+                    user.id = mAuth.currentUser?.uid
+                    user.email = email
+                    user.password = password
+                    addNewUserData(user){
+                        callback(it)
+                    }
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Timber.d("signInWithEmail:failure ${task.getException()}");
+                    Toast.makeText(context, "Signup failed!",
+                        Toast.LENGTH_SHORT).show();
+                    callback(false)
+
+
+                }
+            });
+    }
+
         private fun  checkIfUsernameExists( userName : String,  usersSnapshot: DataSnapshot):Boolean{
             //Checking if user_name already exists.
            var user = User()
             Log.d(TAG,"Username checking");
-            for(ds in  usersSnapshot.child(mActivity.getString(R.string.users_node)).getChildren()){
+            for(ds in  usersSnapshot.child(context.getString(R.string.users_node)).getChildren()){
 
                 user.username = (Objects.requireNonNull(ds.getValue(User::class.java))?.username);
                 if(user.username.equals(userName.toLowerCase())){
@@ -52,40 +77,7 @@ class FirebaseMethods(activity: Activity) {
             }
             return false;
         }
-    //
-    //
-    //    public void signUp(String photo, final String userName, final String Phone, String bloodGroup, final String city, final String area, final UserLocation location, final boolean isDonar, final boolean needBlood, final ProgressBar progressBar, UserDataAddedCallback callback) {
-    //
-    //        progressBar.setVisibility(View.VISIBLE);
-    //        final FirebaseUser user = mAuth.getCurrentUser();
-    //        userID = Objects.requireNonNull(user).getUid();
-    //
-    //        Query query = myRef.child(mActivity.getString(R.string.users_node)).orderByChild(mActivity.getString(R.string.usernameField)).equalTo(StringManipulation.condenseUserName(userName));
-    //        query.addListenerForSingleValueEvent(new ValueEventListener() {
-    //            @Override
-    //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-    //
-    //                if (!dataSnapshot.exists()) {
-    ////                  (String username, String displayName, String userCity, String subArea, Location location, String phoneNo, String bloodGroup, String profile_photo, boolean canDonate, boolean needBlood)
-    //                    addNewUserData(userName, userName, city, area, location, Phone, bloodGroup, photo, isDonar, needBlood, callback);
-    //                    Toast.makeText(mActivity, "Adding User!!", Toast.LENGTH_SHORT).show();
-    //
-    //                } else {
-    //                    String name = userName + ".";
-    //                    name += Objects.requireNonNull(myRef.push().getKey()).substring(3, 10);
-    //                    addNewUserData(name, userName, city, area, location, Phone, bloodGroup, photo, isDonar, needBlood, callback);
-    //                    Toast.makeText(mActivity, "Username already exists!!", Toast.LENGTH_SHORT).show();
-    //                }
-    //            }
-    //
-    //            @Override
-    //            public void onCancelled(@NonNull DatabaseError databaseError) {
-    //                Toast.makeText(mActivity, "Cancelled!!", Toast.LENGTH_SHORT).show();
-    //
-    //            }
-    //        });
-    //    }
-    //
+
     //
     //    private void sendVerificationEmail(final Boolean isRequired) {
     //
@@ -94,7 +86,7 @@ class FirebaseMethods(activity: Activity) {
     //            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
     //                @Override
     //                public void onComplete(@NonNull Task<Void> task) {
-    //                    if (task.isSuccessful()) {
+    //                      if (task.isSuccessful()) {
     //                        Log.d(TAG, "Verification code sent");
     //                        Toast.makeText(mActivity, "Verification email sent, please check your inbox", Toast.LENGTH_SHORT).show();
     //
@@ -344,43 +336,23 @@ class FirebaseMethods(activity: Activity) {
     //        return picture;
     //
     //    }
-    //    private void addNewUserData(String username, String displayName, String userCity, String subArea, UserLocation userLocation, String phoneNo, String bloodGroup, String profile_photo, boolean canDonate, boolean needBlood, UserDataAddedCallback callback) {
-    //
-    //        User user = new User(userID, username, phoneNo, bloodGroup, userCity, subArea, userLocation, canDonate, needBlood,0L);
-    //        final UserAccountSettings settings = new UserAccountSettings(displayName,
-    //                profile_photo, StringManipulation.condenseUserName(username).toLowerCase(Locale.getDefault()));
-    //
-    //        myRef.child(mActivity.getString(R.string.users_node))
-    //                .child(userID)
-    //                .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-    //            @Override
-    //            public void onComplete(@NonNull Task<Void> task) {
-    //
-    //                myRef.child(mActivity.getString(R.string.user_account_settings_node))
-    //                        .child(userID)
-    //                        .setValue(settings).addOnCompleteListener(new OnCompleteListener<Void>() {
-    //                    @Override
-    //                    public void onComplete(@NonNull Task<Void> task) {
-    //
-    ////                        if (!Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified()) {
-    ////                            sendVerificationEmail(true);
-    //
-    ////                        }
-    //                        callback.dataAddedSuccess(true);
-    //                        Log.d(TAG, "new user added");
-    //                    }
-    //                }).addOnFailureListener(new OnFailureListener() {
-    //                    @Override
-    //                    public void onFailure(@NonNull Exception e) {
-    //                        callback.dataAddedSuccess(false);
-    //                        Log.d(TAG, "new user add faild");
-    //                    }
-    //                });
-    //
-    //            }
-    //        });
-    //
-    //    }
+        private fun addNewUserData(user : User,callback : (success:Boolean)-> Unit) {
+
+        Timber.d( "Add new User Block");
+        FirebaseDatabase.getInstance().getReference().child("User").child("123456").setValue("asdfghj");
+//            myRef.child("123")
+//                    .child(user.id!!)
+//                    .setValue(user
+//                    ) { error, ref ->
+//                        Log.d ("data","failed or success")
+//                        callback(true)
+//
+//                    }
+
+
+    }
+
+
     //
     //
     //    public void addRequest(String reqId, String userId, String bloodGroup, String hospital, String description, boolean active, long created_at, long closed_at, String city, String area, UserLocation location, RequestPostCallback callback) {

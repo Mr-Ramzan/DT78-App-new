@@ -71,20 +71,13 @@ class SignupActivity : AppCompatActivity() {
 
 
     private fun signUp(email: String, password: String) {
-        mAuth?.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener(this,
-                OnCompleteListener<AuthResult> { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Timber.d( "signInWithEmail:success");
-                        goToLogin()
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Timber.d("signInWithEmail:failure ${task.getException()}");
-                        Toast.makeText(this@SignupActivity, "Signup failed!",
-                                Toast.LENGTH_SHORT).show();
+        firebaseMethods?.signUp (email, password)
+        {
+            if(it){
+                goToLogin()
+            }
+        }
 
-                    }
-                });
     }
 
     private fun goToLogin() {

@@ -8,6 +8,7 @@ open class User{
     var gender : String? = ""
     var profile_pic : String? = ""
     var phone : String? = ""
+    var password : String? = ""
     var friends_family : ArrayList<String> =ArrayList()
     var id : String? = ""
 
