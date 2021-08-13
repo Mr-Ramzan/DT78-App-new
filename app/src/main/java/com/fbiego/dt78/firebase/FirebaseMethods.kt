@@ -337,19 +337,16 @@ class FirebaseMethods(var context: Activity) {
     //
     //    }
         private fun addNewUserData(user : User,callback : (success:Boolean)-> Unit) {
-
         Timber.d( "Add new User Block");
-        FirebaseDatabase.getInstance().getReference().child("User").child("123456").setValue("asdfghj");
-//            myRef.child("123")
-//                    .child(user.id!!)
-//                    .setValue(user
-//                    ) { error, ref ->
-//                        Log.d ("data","failed or success")
-//                        callback(true)
-//
-//                    }
+        FirebaseDatabase.getInstance().getReference()
+            .child("User")
+            .child(userID!!)
+            .setValue(user).addOnSuccessListener {
 
-
+                    Toast.makeText(context,"user Data saved in DB as well",Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
+                Toast.makeText(context,"user Data not saved",Toast.LENGTH_SHORT).show()
+            }
     }
 
 
