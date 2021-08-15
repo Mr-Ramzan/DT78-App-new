@@ -69,8 +69,6 @@ class HealthActivity : AppCompatActivity(), DataListener {
                     LinearLayoutManager(this@HealthActivity)
             adapter = healthAdapter
         }
-
-
     }
 
 

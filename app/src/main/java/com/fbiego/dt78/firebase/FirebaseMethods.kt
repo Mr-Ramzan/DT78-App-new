@@ -1,16 +1,16 @@
 package com.fbiego.dt78.firebase
 
 import android.app.Activity
-import android.content.Context
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.fbiego.dt78.R
 import com.fbiego.dt78.model.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import timber.log.Timber
@@ -339,8 +339,8 @@ class FirebaseMethods(var context: Activity) {
         private fun addNewUserData(user : User,callback : (success:Boolean)-> Unit) {
         Timber.d( "Add new User Block");
         FirebaseDatabase.getInstance().getReference()
-            .child("User")
-            .child(userID!!)
+            .child("fit_users")
+            .child(user.id!!)
             .setValue(user).addOnSuccessListener {
 
                     Toast.makeText(context,"user Data saved in DB as well",Toast.LENGTH_SHORT).show()

@@ -1,5 +1,6 @@
 package com.fbiego.dt78.workers
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -9,20 +10,22 @@ import androidx.concurrent.futures.CallbackToFutureAdapter
 import androidx.concurrent.futures.CallbackToFutureAdapter.Completer
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
+import com.fbiego.dt78.app.DataListener
 import com.fbiego.dt78.app.ForegroundService
-import com.fbiego.dt78.data.MyDBHandler
-import com.fbiego.dt78.data.byteArrayOfInts
+import com.fbiego.dt78.data.*
 import com.fbiego.dt78.model.HealthRate
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import no.nordicsemi.android.ble.data.Data
 import org.jetbrains.anko.runOnUiThread
+import timber.log.Timber
+import java.util.*
 
-class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerParameters) :
-    ListenableWorker(appContext, workerParams) {
+class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerParameters) : DataListener
+   , ListenableWorker(appContext, workerParams) {
     override fun startWork(): ListenableFuture<Result?> {
-        Key = workerParams.inputData.getString("key")!!.toInt()
         retryCount = 0
         return CallbackToFutureAdapter.getFuture { completer: Completer<Result?> ->
             val callback: MonthlyReportsCallback =
@@ -39,15 +42,53 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                         }
                     }
                 }
-            if(Key!=-1) {
                 measureAndUpload(callback)
-            }else{
-                completer.setCancelled()
-            }
             callback
         }
     }
 
+
+    @SuppressLint("SetTextI18n")
+    override fun onDataReceived(data: Data) {
+        val dbHandler = MyDBHandler(appContext, null, null, 1)
+        val calendar = Calendar.getInstance(Locale.getDefault())
+        if (data.getByte(4) == (0x31).toByte()) {
+            Timber.d("Type = ${data.getByte(5)!!.toPInt()} and value = ${data.getByte(6)!!.toPInt()}")
+            if (data.getByte(5) == (0x0A).toByte()) {
+                val bp = data.getByte(6)!!.toPInt()
+                if (bp != 0) {
+                    dbHandler.insertHeart(
+                            HeartData(calendar.get(Calendar.YEAR) - 2000, calendar.get(Calendar.MONTH) + 1,
+                                    calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), bp)
+                    )
+                }
+            }
+            if (data.getByte(5) == (0x12).toByte()) {
+                val sp = data.getByte(6)!!.toPInt()
+                if (sp != 0) {
+                    dbHandler.insertSp02(
+                            OxygenData(calendar.get(Calendar.YEAR) - 2000, calendar.get(Calendar.MONTH) + 1,
+                                    calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), sp)
+                    )
+                }
+            }
+
+            if (data.getByte(5) == (0x22).toByte()) {
+                val bph = data.getByte(6)!!.toPInt()
+                val bpl = data.getByte(7)!!.toPInt()
+
+                if (bph != 0) {
+
+                    dbHandler.insertBp(
+                            PressureData(calendar.get(Calendar.YEAR) - 2000, calendar.get(Calendar.MONTH) + 1,
+                                    calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), bph, bpl)
+                    )
+                }
+            }
+        }
+
+
+    }
 
     fun measureAndUpload(callback: MonthlyReportsCallback) {
         ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x0A, 0x00))
@@ -80,6 +121,7 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                         healthRate.bpHRate = (dbHandler.getBpToday()[0])
                         healthRate.bpLRate = (dbHandler.getBpToday()[1])
                         healthRate.spRate =(dbHandler.getSp02Today())
+                        Log.w("Data from db","=====>${healthRate.heartRate}")
                         val firebaseUser: FirebaseUser =
                             FirebaseAuth.getInstance().getCurrentUser()!!
 //                        FirebaseDatabase.getInstance().reference
@@ -88,7 +130,7 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
 //                            .child("health")
 //                            .setValue(healthRate)
                         FirebaseDatabase.getInstance().getReference()
-                            .child("User")
+                            .child("fit_users")
                             .child(firebaseUser.getUid())
                             .child("healthData")
                             .push()
@@ -117,11 +159,19 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
         }
     }
 
+
+
+
+
+
+
     companion object {
         var retryCount = 0
         var Key =0;
         lateinit var query : Query
     }
+
+
 }
 
 
