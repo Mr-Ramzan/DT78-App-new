@@ -76,7 +76,7 @@ class HealthActivity : AppCompatActivity(), DataListener {
 
         try {
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT  >=  Build.VERSION_CODES.LOLLIPOP) {
                 val window = window
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                 window.statusBarColor = ContextCompat.getColor(this@HealthActivity, R.color.colorButtonDisabledRed)
