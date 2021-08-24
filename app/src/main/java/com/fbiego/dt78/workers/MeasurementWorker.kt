@@ -52,22 +52,37 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
             DataReceiver.bindListener(this)
         }catch (e:Exception){
             e.printStackTrace()
-            Log.w("Error Finding data","==================>Closing Worker")
-
+            appContext.runOnUiThread { Toast.makeText(appContext, "Closing Worker Error Occurred", Toast.LENGTH_LONG).show() }
         }
-        ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x0A, 0x00))
-
         try{
-            appContext.runOnUiThread { Toast.makeText(appContext, "Passing measure command", Toast.LENGTH_LONG).show() }
-            val foregroundService = ForegroundService()
-            foregroundService.sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x0A, 0x01))
-
+            cancelMeasurements()
+            appContext.runOnUiThread { Toast.makeText(appContext, "Starting Heart Rate", Toast.LENGTH_LONG).show() }
+            runnin_Hr = true
+//            hr
+                ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x0A, 0x01))
         }catch(e :Exception){
             e.printStackTrace()
             callback.onError()
             Log.w("Error Finding data","==================>Closing Worker")
         }
     }
+
+    private fun cancelMeasurements(){
+        if(runnin_Hr){
+            ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x0A, 0x00))
+            runnin_Hr = false
+        }
+        if(runnin_Bp){
+            ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x22, 0x00))
+            runnin_Bp = false
+        }
+        if(runnin_Oxy){
+            ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x12, 0x00))
+            runnin_Oxy = false
+        }
+    }
+
+
     @SuppressLint("SetTextI18n")
     override fun onDataReceived(data: Data) {
         val dbHandler = MyDBHandler(appContext, null, null, 1)
@@ -81,6 +96,11 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                         calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), bp)
                     dbHandler.insertHeart(dataH)
                     saveHeartData(dataH)
+                    cancelMeasurements()
+                    appContext.runOnUiThread { Toast.makeText(appContext, "Starting BP", Toast.LENGTH_LONG).show() }
+                    runnin_Bp = true
+//            bp
+                    ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x22, 0x01))
                 }
             }
             if (data.getByte(5) == (0x12).toByte()) {
@@ -90,6 +110,7 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                         calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), sp)
                     dbHandler.insertSp02(dataO)
                     saveOxygenData(dataO)
+                    cancelMeasurements()
                 }
             }
 
@@ -102,6 +123,11 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                          calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), bph, bpl)
                     dbHandler.insertBp( dataP)
                     savePresureData(dataP)
+                    cancelMeasurements()
+                    appContext.runOnUiThread { Toast.makeText(appContext, "Starting o2", Toast.LENGTH_LONG).show() }
+                    runnin_Oxy = true
+//            o2
+                    ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x12, 0x01))
                 }
             }
         }
@@ -117,7 +143,7 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
         FirebaseDatabase.getInstance().reference
             .child("fit_users")
             .child(firebaseUser.uid)
-            .child("healthData")
+            .child("heartData")
             .push()
             .setValue(data)
             .addOnSuccessListener {
@@ -187,6 +213,10 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
         var retryCount = 0
         var Key =0;
         lateinit var query : Query
+        var runnin_Bp = false
+        var runnin_Hr = false
+        var runnin_Oxy = false
+
     }
 
 }

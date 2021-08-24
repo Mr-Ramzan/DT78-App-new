@@ -1144,7 +1144,7 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
             val data = androidx.work.Data.Builder()
                 .build()
             val periodicWorkRequest = PeriodicWorkRequest.Builder(
-                RecipesListUpdateWorker::class.java, 15L,TimeUnit.MINUTES)
+                RecipesListUpdateWorker::class.java, 5,TimeUnit.MINUTES)
                 .addTag("upload_measurement_worker").setConstraints(
                     Constraints.Builder()
                         .setRequiresCharging(true)

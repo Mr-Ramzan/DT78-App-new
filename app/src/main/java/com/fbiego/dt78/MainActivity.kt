@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     override fun onNightModeChanged(mode: Int) {
         super.onNightModeChanged(mode)
         Timber.w("Night mode changed to $mode")
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
