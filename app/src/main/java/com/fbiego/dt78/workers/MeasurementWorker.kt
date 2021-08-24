@@ -25,10 +25,10 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
    , ListenableWorker(appContext, workerParams) {
 
     override fun startWork(): ListenableFuture<Result?> {
+        cancelMeasurements()
         retryCount = 0
         return CallbackToFutureAdapter.getFuture { completer: Completer<Result?> ->
-            val callback: SuccessFailCallback =
-                object : SuccessFailCallback {
+            callback = object : SuccessFailCallback {
                     override fun onSuccess() {
                         completer.set(Result.success())
                     }
@@ -47,7 +47,7 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
     }
 
 
-    fun measureAndUpload(callback: SuccessFailCallback) {
+    fun measureAndUpload(callback: SuccessFailCallback?) {
         try{
             DataReceiver.bindListener(this)
         }catch (e:Exception){
@@ -55,31 +55,22 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
             appContext.runOnUiThread { Toast.makeText(appContext, "Closing Worker Error Occurred", Toast.LENGTH_LONG).show() }
         }
         try{
-            cancelMeasurements()
             appContext.runOnUiThread { Toast.makeText(appContext, "Starting Heart Rate", Toast.LENGTH_LONG).show() }
-            runnin_Hr = true
 //            hr
                 ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x0A, 0x01))
         }catch(e :Exception){
             e.printStackTrace()
-            callback.onError()
+            callback?.onError()
             Log.w("Error Finding data","==================>Closing Worker")
         }
     }
 
     private fun cancelMeasurements(){
-        if(runnin_Hr){
+
             ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x0A, 0x00))
-            runnin_Hr = false
-        }
-        if(runnin_Bp){
             ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x22, 0x00))
-            runnin_Bp = false
-        }
-        if(runnin_Oxy){
             ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x12, 0x00))
-            runnin_Oxy = false
-        }
+
     }
 
 
@@ -96,9 +87,7 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                         calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), bp)
                     dbHandler.insertHeart(dataH)
                     saveHeartData(dataH)
-                    cancelMeasurements()
                     appContext.runOnUiThread { Toast.makeText(appContext, "Starting BP", Toast.LENGTH_LONG).show() }
-                    runnin_Bp = true
 //            bp
                     ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x22, 0x01))
                 }
@@ -110,7 +99,12 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                         calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), sp)
                     dbHandler.insertSp02(dataO)
                     saveOxygenData(dataO)
-                    cancelMeasurements()
+                    try{
+                        if(callback!=null){
+                            callback?.onSuccess()
+                        }
+
+                    }catch (e:java.lang.Exception){e.printStackTrace()}
                 }
             }
 
@@ -123,9 +117,7 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                          calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), bph, bpl)
                     dbHandler.insertBp( dataP)
                     savePresureData(dataP)
-                    cancelMeasurements()
                     appContext.runOnUiThread { Toast.makeText(appContext, "Starting o2", Toast.LENGTH_LONG).show() }
-                    runnin_Oxy = true
 //            o2
                     ForegroundService().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x12, 0x01))
                 }
@@ -160,8 +152,6 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                 }
             }
     }
-
-
     private fun savePresureData(data :PressureData ){
         val firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
         FirebaseDatabase.getInstance().reference
@@ -184,8 +174,6 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                 }
             }
     }
-
-
     private fun saveOxygenData(data :OxygenData){
         val firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
         FirebaseDatabase.getInstance().reference
@@ -212,10 +200,8 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
     companion object {
         var retryCount = 0
         var Key =0;
-        lateinit var query : Query
-        var runnin_Bp = false
-        var runnin_Hr = false
-        var runnin_Oxy = false
+        var callback: SuccessFailCallback? = null
+
 
     }
 
