@@ -1,7 +1,6 @@
 package com.fbiego.dt78.model
 
 open class User{
-
     var username : String? = ""
     var email : String? = ""
     var age : String? = ""
@@ -11,6 +10,5 @@ open class User{
     var password : String? = ""
     var friends_family : ArrayList<String> =ArrayList()
     var id : String? = ""
-
-
+    var healthData : ArrayList<HealthRate> = ArrayList()
 }

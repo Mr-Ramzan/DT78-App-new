@@ -337,25 +337,16 @@ class FirebaseMethods(var context: Activity) {
     //
     //    }
         private fun addNewUserData(user : User,callback : (success:Boolean)-> Unit) {
-
         Timber.d( "Add new User Block");
-            myRef.child(context.getString(R.string.users_node))
-                    .child(user.id!!)
-                    .setValue(user).addOnCanceledListener {
+        FirebaseDatabase.getInstance().getReference()
+            .child("fit_users")
+            .child(user.id!!)
+            .setValue(user).addOnSuccessListener {
 
-                        Log.d ("data","canceled=======>")
-
-                    }.addOnCompleteListener {
-
-                        Log.d ("data","============> success")
-
-                    }.addOnFailureListener {
-
-                        Log.d ("data","=============>Failure")
-
-                    }
-
-
+                    Toast.makeText(context,"user Data saved in DB as well",Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
+                Toast.makeText(context,"user Data not saved",Toast.LENGTH_SHORT).show()
+            }
     }
 
 

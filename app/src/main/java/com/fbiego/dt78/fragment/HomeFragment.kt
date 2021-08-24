@@ -29,17 +29,22 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import androidx.work.*
 import com.app.infideap.stylishwidget.view.AProgressBar
 import com.db.williamchart.data.Scale
 import com.db.williamchart.view.DonutChartView
 import com.fbiego.dt78.*
+import com.fbiego.dt78.R
 import com.fbiego.dt78.app.*
 import com.fbiego.dt78.data.*
 import com.fbiego.dt78.databinding.FragmentMainHomeBinding
+import com.fbiego.dt78.workers.RecipesListUpdateWorker
 import no.nordicsemi.android.ble.data.Data
 import org.jetbrains.anko.support.v4.runOnUiThread
 import timber.log.Timber
+import java.time.Duration
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
@@ -716,9 +721,6 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
     @SuppressLint("SetTextI18n")
     fun onDataReceived(data: Data, context: Context, stepsZ: Int) {
 
-
-        run {}
-
         Timber.w("Data received")
         if (data.size() == 8) {
             if (data.getByte(4) == (0x91).toByte()) {
@@ -747,7 +749,6 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
             val cl = (((data.getByte(10)!!).toPInt() * 256) + (data.getByte(11)!!).toPInt())
             cal?.text = "$cl " + context.resources.getString(R.string.kcal)
             dis?.text = distance(steps * stepsZ, ForegroundService.unit != 0, context)
-
             //updateDonut(this@MainActivity, steps, target, true)
 
         }
@@ -762,10 +763,11 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
             setIcon(ForegroundService.connected)
             if (ForegroundService.connected) {
                 watch?.text = ForegroundService.deviceName
+                startDataUpdates()
             } else {
                 chrg?.visibility = View.GONE
+                cancelWorker()
             }
-
 
             val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())
             val id = pref.getInt(SettingsActivity.PREF_WATCH_ID, -1)
@@ -782,8 +784,6 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
                 }
             }
         }
-
-
     }
 
     override fun onClick(view: View?) {
@@ -1127,6 +1127,33 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
             false
         } else {
             true
+        }
+    }
+
+
+    fun cancelWorker() {
+        try {
+            WorkManager.getInstance(requireContext()).cancelAllWorkByTag("upload_measurement_worker")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun startDataUpdates() {
+        try {
+            val data = androidx.work.Data.Builder()
+                .build()
+            val periodicWorkRequest = PeriodicWorkRequest.Builder(
+                RecipesListUpdateWorker::class.java, 15L,TimeUnit.MINUTES)
+                .addTag("upload_measurement_worker").setConstraints(
+                    Constraints.Builder()
+                        .setRequiresCharging(true)
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()
+                ).setInitialDelay(0L, TimeUnit.MILLISECONDS).setInputData(data).build()
+            WorkManager.getInstance(requireActivity()).enqueue(periodicWorkRequest)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

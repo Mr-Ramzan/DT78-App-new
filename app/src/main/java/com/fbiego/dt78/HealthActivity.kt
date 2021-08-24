@@ -69,8 +69,6 @@ class HealthActivity : AppCompatActivity(), DataListener {
                     LinearLayoutManager(this@HealthActivity)
             adapter = healthAdapter
         }
-
-
     }
 
 
@@ -154,6 +152,7 @@ class HealthActivity : AppCompatActivity(), DataListener {
     }
 
     private fun stopMeasure() {
+
         when (viewH) {
             0 -> {
                 FG().sendData(byteArrayOfInts(0xAB, 0x00, 0x04, 0xFF, 0x31, 0x0A, 0x00))
