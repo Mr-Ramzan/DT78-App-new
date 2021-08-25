@@ -62,6 +62,8 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
             e.printStackTrace()
             callback?.onError()
             Log.w("Error Finding data","==================>Closing Worker")
+            appContext.runOnUiThread { Toast.makeText(appContext, "Closing Worker Error Occurred", Toast.LENGTH_LONG).show() }
+
         }
     }
 
@@ -164,7 +166,7 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                 appContext.runOnUiThread {
                     Toast.makeText(
                         appContext,
-                        "user heart Data  saved",
+                        "user Pressure Data  saved",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -186,7 +188,7 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
                 appContext.runOnUiThread {
                     Toast.makeText(
                         appContext,
-                        "user heart Data  saved",
+                        "user Oxygen Data  saved",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -201,8 +203,6 @@ class RecipesListUpdateWorker(var appContext: Context, var workerParams: WorkerP
         var retryCount = 0
         var Key =0;
         var callback: SuccessFailCallback? = null
-
-
     }
 
 }

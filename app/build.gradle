@@ -72,6 +72,8 @@ dependencies {
 
     // kotlin anko
     implementation "org.jetbrains.anko:anko:0.10.8"
+    // Kotlin Coroutines
+        implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
     // Jetpack navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'

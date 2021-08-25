@@ -39,6 +39,9 @@ import com.fbiego.dt78.app.*
 import com.fbiego.dt78.data.*
 import com.fbiego.dt78.databinding.FragmentMainHomeBinding
 import com.fbiego.dt78.workers.RecipesListUpdateWorker
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import no.nordicsemi.android.ble.data.Data
 import org.jetbrains.anko.support.v4.runOnUiThread
 import timber.log.Timber
@@ -1133,7 +1136,10 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
 
     fun cancelWorker() {
         try {
-            WorkManager.getInstance(requireContext()).cancelAllWorkByTag("upload_measurement_worker")
+            CoroutineScope(Dispatchers.IO).launch {
+                WorkManager.getInstance(requireContext())
+                    .cancelAllWorkByTag("upload_measurement_worker")
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -1141,17 +1147,22 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
 
     fun startDataUpdates() {
         try {
-            val data = androidx.work.Data.Builder()
-                .build()
-            val periodicWorkRequest = PeriodicWorkRequest.Builder(
-                RecipesListUpdateWorker::class.java, 5,TimeUnit.MINUTES)
-                .addTag("upload_measurement_worker").setConstraints(
-                    Constraints.Builder()
-                        .setRequiresCharging(true)
-                        .setRequiredNetworkType(NetworkType.CONNECTED)
-                        .build()
-                ).setInitialDelay(0L, TimeUnit.MILLISECONDS).setInputData(data).build()
-            WorkManager.getInstance(requireActivity()).enqueue(periodicWorkRequest)
+          CoroutineScope(Dispatchers.IO).launch {
+              val data = androidx.work.Data.Builder().build()
+              val periodicWorkRequest = PeriodicWorkRequest.Builder(
+                  RecipesListUpdateWorker::class.java, 5, TimeUnit.MINUTES
+              )
+                  .addTag("upload_measurement_worker").setConstraints(
+                      Constraints.Builder()
+                          .setRequiredNetworkType(NetworkType.CONNECTED)
+                          .build()
+                  )
+                  .setInitialDelay(0L, TimeUnit.MILLISECONDS)
+                  .setInputData(data)
+                  .build()
+              WorkManager.getInstance(requireActivity()).enqueue(periodicWorkRequest)
+          }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
