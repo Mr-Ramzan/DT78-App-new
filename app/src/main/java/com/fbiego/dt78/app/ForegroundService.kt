@@ -21,12 +21,16 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
+import androidx.work.WorkManager
 import com.fbiego.dt78.*
 import com.fbiego.dt78.ble.LEManager
 import com.fbiego.dt78.ble.LeManagerCallbacks
 import com.fbiego.dt78.data.*
 import com.fbiego.dt78.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_apps.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import no.nordicsemi.android.ble.BleManager
 import no.nordicsemi.android.ble.data.Data
 import timber.log.Timber
@@ -401,6 +405,20 @@ class ForegroundService : Service(), MessageListener, PhonecallListener, DataLis
 
     }
 
+
+
+    fun cancelWorker() {
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                WorkManager.getInstance(applicationContext)
+                    .cancelAllWorkByTag("upload_measurement_worker")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onDestroy() {
         Timber.w("onDestroy")
@@ -409,6 +427,7 @@ class ForegroundService : Service(), MessageListener, PhonecallListener, DataLis
         ringDisconnect(false)
         ChargeStateReceiver.unBindListener()
         isReconnect = false
+        cancelWorker()
 
 
         val dbHandler = MyDBHandler(this, null, null, 1)

@@ -62,7 +62,6 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
         super.onCreate(savedInstanceState)
 
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,8 +69,6 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
         mBinding = FragmentMainHomeBinding.inflate(layoutInflater, container, false)
         return mBinding.root
     }
-
-
     private lateinit var menu: Menu
     private var alertDialog: AlertDialog? = null
     lateinit var colorMultiProgressBar :AProgressBar
@@ -79,11 +76,8 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
     private val noDelay = 500L
     private val duration = 1000L * 30
     private lateinit var btAdapter: BluetoothAdapter
-
     private val REQUEST_ENABLE_BT = 37
     private lateinit var pref: SharedPreferences
-
-
     private var sleepList = ArrayList<SleepData>()
     private var sleep = ArrayList<SleepData>()
     private var daysList = ArrayList<String>()
@@ -92,10 +86,7 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
     private var maxDay = 0
     private var start = 0
     private var end = 0
-
-
     companion object {
-
         const val PERMISSIONS_CONTACTS = 100
         const val PERMISSION_CONTACT = 101
         const val PERMISSION_SMS = 42
@@ -103,10 +94,7 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
         const val PERMISSION_CALL_LOG = 54
         const val PERMISSION_STORAGE = 57
         const val PERMISSION_CAMERA = 58
-
         var target = 1000
-
-
         var bat: TextView? = null
         var watch: TextView? = null
         var bt: ImageView? = null
@@ -118,8 +106,6 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
         var progress: TextView? = null
         var donut: DonutChartView? = null
         var contxt: Context? = null
-
-
     }
 
     lateinit var toolbar: Toolbar
@@ -1137,7 +1123,7 @@ class HomeFragment : Fragment(), ConnectionListener, View.OnClickListener {
     fun cancelWorker() {
         try {
             CoroutineScope(Dispatchers.IO).launch {
-                WorkManager.getInstance(requireContext())
+                WorkManager.getInstance(requireContext().applicationContext)
                     .cancelAllWorkByTag("upload_measurement_worker")
             }
         } catch (e: Exception) {
